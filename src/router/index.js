@@ -1,21 +1,12 @@
-import { createRouter, createWebHashHistory } from "vue-router";
-import Style from "@/views/StyleView.vue";
 import Home from "@/views/HomeView.vue";
+import { createRouter, createWebHashHistory } from "vue-router";
 
 const routes = [
-  {
-    meta: {
-      title: "Select style",
-    },
-    path: "/",
-    name: "style",
-    component: Style,
-  },
   {
     // Document title tag
     // We combine it with defaultDocumentTitle set in `src/main.js` on router.afterEach hook
     meta: {
-      title: "Dashboard",
+      title: "Главная",
     },
     path: "/dashboard",
     name: "dashboard",
@@ -23,7 +14,7 @@ const routes = [
   },
   {
     meta: {
-      title: "Tables",
+      title: "Юр. Лица",
     },
     path: "/tables",
     name: "tables",
@@ -31,7 +22,7 @@ const routes = [
   },
   {
     meta: {
-      title: "Forms",
+      title: "Настройки",
     },
     path: "/forms",
     name: "forms",
@@ -39,7 +30,7 @@ const routes = [
   },
   {
     meta: {
-      title: "Profile",
+      title: "Профиль",
     },
     path: "/profile",
     name: "profile",
@@ -47,23 +38,7 @@ const routes = [
   },
   {
     meta: {
-      title: "Ui",
-    },
-    path: "/ui",
-    name: "ui",
-    component: () => import("@/views/UiView.vue"),
-  },
-  {
-    meta: {
-      title: "Responsive layout",
-    },
-    path: "/responsive",
-    name: "responsive",
-    component: () => import("@/views/ResponsiveView.vue"),
-  },
-  {
-    meta: {
-      title: "Login",
+      title: "Авторизация",
     },
     path: "/login",
     name: "login",
@@ -73,9 +48,12 @@ const routes = [
     meta: {
       title: "Error",
     },
-    path: "/error",
+    path: "/:catchAll(.*)",
     name: "error",
     component: () => import("@/views/ErrorView.vue"),
+    beforeEnter: (to, from, next) => {
+      next("/login");
+    },
   },
 ];
 

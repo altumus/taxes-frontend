@@ -1,27 +1,21 @@
 import {
   mdiAccountCircle,
-  mdiMonitor,
-  mdiGithub,
   mdiLock,
-  mdiAlertCircle,
+  mdiMonitor,
   mdiSquareEditOutline,
   mdiTable,
   mdiViewList,
-  mdiTelevisionGuide,
-  mdiResponsive,
-  mdiPalette,
-  mdiReact,
 } from "@mdi/js";
 
 export default [
   {
     to: "/dashboard",
     icon: mdiMonitor,
-    label: "Dashboard",
+    label: "Главная",
   },
   {
     to: "/tables",
-    label: "Tables",
+    label: "Юр. Лица",
     icon: mdiTable,
   },
   {
@@ -30,34 +24,14 @@ export default [
     icon: mdiSquareEditOutline,
   },
   {
-    to: "/ui",
-    label: "UI",
-    icon: mdiTelevisionGuide,
-  },
-  {
-    to: "/responsive",
-    label: "Responsive",
-    icon: mdiResponsive,
-  },
-  {
-    to: "/",
-    label: "Styles",
-    icon: mdiPalette,
-  },
-  {
     to: "/profile",
-    label: "Profile",
+    label: "Настройки",
     icon: mdiAccountCircle,
   },
   {
     to: "/login",
-    label: "Login",
+    label: "Авторизация",
     icon: mdiLock,
-  },
-  {
-    to: "/error",
-    label: "Error",
-    icon: mdiAlertCircle,
   },
   {
     label: "Dropdown",
@@ -70,17 +44,5 @@ export default [
         label: "Item Two",
       },
     ],
-  },
-  {
-    href: "https://github.com/justboil/admin-one-vue-tailwind",
-    label: "GitHub",
-    icon: mdiGithub,
-    target: "_blank",
-  },
-  {
-    href: "https://github.com/justboil/admin-one-react-tailwind",
-    label: "React version",
-    icon: mdiReact,
-    target: "_blank",
   },
 ];
