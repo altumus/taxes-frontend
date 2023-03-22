@@ -10,6 +10,7 @@ import FormControl from "@/components/FormControl.vue";
 import BaseButton from "@/components/BaseButton.vue";
 import BaseButtons from "@/components/BaseButtons.vue";
 import LayoutGuest from "@/layouts/LayoutGuest.vue";
+import { useUserStore } from "@/stores/user";
 
 const form = reactive({
   login: "john.doe",

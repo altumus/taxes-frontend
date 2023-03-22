@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "resolveJsonModule": true,
+    "experimentalDecorators": true,
+    "strictPropertyInitialization": false,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "*.ts": ["*"]
+    },
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "strict": true,
+    "noImplicitAny": false,
+    "lib": ["es2020", "dom"],
+    "allowJs": true
+  },
+  "include": ["src/**/*", "tests/**/*", "test"],
+  "exclude": ["node_modules"]
+}
