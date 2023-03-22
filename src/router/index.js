@@ -22,14 +22,6 @@ const routes = [
   },
   {
     meta: {
-      title: "Настройки",
-    },
-    path: "/forms",
-    name: "forms",
-    component: () => import("@/views/FormsView.vue"),
-  },
-  {
-    meta: {
       title: "Профиль",
     },
     path: "/profile",
