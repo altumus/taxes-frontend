@@ -49,20 +49,15 @@ const submitPass = () => {
 
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <CardBox is-form @submit.prevent="submitProfile">
-          <FormField label="Avatar" help="Max 500kb">
-            <FormFilePicker label="Upload" />
-          </FormField>
-
-          <FormField label="Name" help="Required. Your name">
+          <FormField label="Имя" help="Обязательное поле">
             <FormControl
               v-model="profileForm.name"
               :icon="mdiAccount"
               name="username"
               required
-              autocomplete="username"
             />
           </FormField>
-          <FormField label="E-mail" help="Required. Your e-mail">
+          <FormField label="E-mail" help="Обязательное поле">
             <FormControl
               v-model="profileForm.email"
               :icon="mdiMail"
@@ -75,44 +70,23 @@ const submitPass = () => {
 
           <template #footer>
             <BaseButtons>
-              <BaseButton color="info" type="submit" label="Submit" />
-              <BaseButton color="info" label="Options" outline />
+              <BaseButton color="info" type="submit" label="Изменить" />
             </BaseButtons>
           </template>
         </CardBox>
 
         <CardBox is-form @submit.prevent="submitPass">
-          <FormField
-            label="Current password"
-            help="Required. Your current password"
-          >
-            <FormControl
-              v-model="passwordForm.password_current"
-              :icon="mdiAsterisk"
-              name="password_current"
-              type="password"
-              required
-              autocomplete="current-password"
-            />
-          </FormField>
-
-          <BaseDivider />
-
-          <FormField label="New password" help="Required. New password">
+          <FormField label="Новый пароль">
             <FormControl
               v-model="passwordForm.password"
               :icon="mdiFormTextboxPassword"
               name="password"
               type="password"
               required
-              autocomplete="new-password"
             />
           </FormField>
 
-          <FormField
-            label="Confirm password"
-            help="Required. New password one more time"
-          >
+          <FormField label="Подтверждение пароля">
             <FormControl
               v-model="passwordForm.password_confirmation"
               :icon="mdiFormTextboxPassword"
@@ -125,8 +99,7 @@ const submitPass = () => {
 
           <template #footer>
             <BaseButtons>
-              <BaseButton type="submit" color="info" label="Submit" />
-              <BaseButton color="info" label="Options" outline />
+              <BaseButton type="submit" color="info" label="Изменить пароль" />
             </BaseButtons>
           </template>
         </CardBox>

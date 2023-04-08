@@ -1,17 +1,6 @@
-import Home from "@/views/HomeView.vue";
 import { createRouter, createWebHashHistory } from "vue-router";
 
 const routes = [
-  {
-    // Document title tag
-    // We combine it with defaultDocumentTitle set in `src/main.js` on router.afterEach hook
-    meta: {
-      title: "Главная",
-    },
-    path: "/dashboard",
-    name: "dashboard",
-    component: Home,
-  },
   {
     meta: {
       title: "Юр. Лица",
