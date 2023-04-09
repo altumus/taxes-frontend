@@ -13,14 +13,16 @@ import LayoutGuest from "@/layouts/LayoutGuest.vue";
 import { useUserStore } from "@/stores/user";
 
 const form = reactive({
-  login: "john.doe",
-  pass: "highly-secure-password-fYjUw-",
-  remember: true,
+  login: "",
+  pass: "",
 });
 
 const router = useRouter();
 
+const userStore = useUserStore();
+
 const submit = () => {
+  userStore.login(form.login, form.pass, false);
   router.push("/tables");
 };
 </script>
@@ -47,13 +49,6 @@ const submit = () => {
             autocomplete="current-password"
           />
         </FormField>
-
-        <FormCheckRadio
-          v-model="form.remember"
-          name="remember"
-          label="Remember"
-          :input-value="true"
-        />
 
         <template #footer>
           <BaseButtons>

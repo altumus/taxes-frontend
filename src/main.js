@@ -9,6 +9,12 @@ import router from "./router";
 
 import "./css/main.css";
 
+window.addEventListener('unhandledrejection', (event) => {
+  if(event.reason?.response?.data?.message === 'Unauthorized') {
+    router.push('/login')
+  }
+})
+
 /* Init Pinia */
 const pinia = createPinia();
 
