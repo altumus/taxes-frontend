@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 
 const routes = [
   {
@@ -32,14 +32,11 @@ const routes = [
     path: "/:catchAll(.*)",
     name: "error",
     component: () => import("@/views/ErrorView.vue"),
-    beforeEnter: (to, from, next) => {
-      next("/login");
-    },
   },
 ];
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes,
   scrollBehavior(to, from, savedPosition) {
     return savedPosition || { top: 0 };
