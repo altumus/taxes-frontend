@@ -7,6 +7,7 @@ import { useMainStore } from "@/stores/main.js";
 import BaseIcon from "@/components/BaseIcon.vue";
 import NavBarMenuList from "@/components/NavBarMenuList.vue";
 import BaseDivider from "@/components/BaseDivider.vue";
+import { useUserStore } from "@/stores/user";
 
 const props = defineProps({
   item: {
@@ -46,8 +47,14 @@ const componentClass = computed(() => {
   return base;
 });
 
+const userStore = useUserStore();
+
+const user = computed(() => {
+  return userStore.user;
+});
+
 const itemLabel = computed(() =>
-  props.item.isCurrentUser ? useMainStore().userName : props.item.label
+  props.item.isCurrentUser ? user.value.name : props.item.label
 );
 
 const isDropdownActive = ref(false);
@@ -109,8 +116,9 @@ onBeforeUnmount(() => {
       <span
         class="px-2 transition-colors"
         :class="{ 'lg:hidden': item.isDesktopNoLabel && item.icon }"
-        >{{ itemLabel }}</span
       >
+        {{ itemLabel }}
+      </span>
       <BaseIcon
         v-if="item.menu"
         :path="isDropdownActive ? mdiChevronUp : mdiChevronDown"

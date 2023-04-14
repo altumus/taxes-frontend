@@ -4,7 +4,7 @@
       <div class="space-y-3 text-center md:text-left lg:mx-12">
         <div class="flex justify-center md:block"></div>
         <h1 class="text-2xl">
-          <b>{{ userName }}</b>
+          <b>{{ user.name }}</b>
         </h1>
         <h3 class="text-sm">
           <b>Бухгалтер</b>
@@ -15,14 +15,14 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
-import { useMainStore } from "@/stores/main";
 import BaseLevel from "@/components/BaseLevel.vue";
 import CardBox from "@/components/CardBox.vue";
+import { useUserStore } from "@/stores/user";
+import { computed } from "@vue/reactivity";
 
-const mainStore = useMainStore();
+const userStore = useUserStore();
 
-const userName = computed(() => mainStore.userName);
-
-const userSwitchVal = ref(false);
+const user = computed(() => {
+  return userStore.user;
+});
 </script>

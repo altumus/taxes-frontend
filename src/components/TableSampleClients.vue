@@ -24,6 +24,8 @@
     </span>
   </div>
 
+  {{ clients }}
+
   <table>
     <thead>
       <tr>
@@ -92,7 +94,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useMainStore } from "@/stores/main";
 import { mdiEye, mdiTrashCan } from "@mdi/js";
 import CardBoxModal from "@/components/CardBoxModal.vue";
@@ -100,9 +102,25 @@ import TableCheckboxCell from "@/components/TableCheckboxCell.vue";
 import BaseLevel from "@/components/BaseLevel.vue";
 import BaseButtons from "@/components/BaseButtons.vue";
 import BaseButton from "@/components/BaseButton.vue";
+import { useUserStore } from "@/stores/user";
+import { useClientStore } from "@/stores/clients";
 
 defineProps({
   checkable: Boolean,
+});
+
+const userStore = useUserStore();
+
+const user = computed(() => {
+  return userStore.user;
+});
+
+const clientStore = useClientStore();
+
+const clients = clientStore.clients;
+
+onMounted(() => {
+  clientStore.getClientsByInspectionId(user.value.inspectionId);
 });
 
 const mainStore = useMainStore();
