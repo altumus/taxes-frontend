@@ -128,17 +128,17 @@ import { useUserStore } from "@/stores/user";
 import { useClientStore } from "@/stores/clients";
 
 const form = ref({
-  fio: "testdata",
-  inn: "testdata",
-  phone: "testdata",
-  email: "testdata",
-  name: "testdata",
-  orgInn: "testdata",
-  kpp: "testdata",
-  ogrn: "testdata",
-  physicalAdress: "testdata",
-  jurAdress: "testdata",
-  position: "testdata",
+  fio: "",
+  inn: "",
+  phone: "",
+  email: "",
+  name: "",
+  orgInn: "",
+  kpp: "",
+  ogrn: "",
+  physicalAdress: "",
+  jurAdress: "",
+  position: "",
 });
 
 const userStore = useUserStore();
