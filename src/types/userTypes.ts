@@ -5,6 +5,8 @@ export type UserType = {
   name: string;
   password: string;
   type: UserTypes;
+  inspectionCode: string;
+  inspectionName: string;
 };
 
 enum UserTypes {

@@ -13,6 +13,7 @@ export const useUserStore = defineStore("user", {
       const user = await Api.login(login, mdCoded);
       localStorage.setItem("login", user.login);
       localStorage.setItem("password", user.password);
+      console.log("user", user);
       this.user = user;
       return user;
     },

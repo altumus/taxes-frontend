@@ -7,7 +7,9 @@
           <b>{{ user.name }}</b>
         </h1>
         <h3 class="text-sm">
-          <b>Бухгалтер</b>
+          <b> {{ localizePosition(user.type) }} </b>
+          <br />
+          <b>{{ user.inspectionName }} - {{ user.inspectionCode }}</b>
         </h3>
       </div>
     </BaseLevel>
@@ -19,6 +21,7 @@ import BaseLevel from "@/components/BaseLevel.vue";
 import CardBox from "@/components/CardBox.vue";
 import { useUserStore } from "@/stores/user";
 import { computed } from "@vue/reactivity";
+import { localizePosition } from "@/js/helpers/localizePosition.js";
 
 const userStore = useUserStore();
 
