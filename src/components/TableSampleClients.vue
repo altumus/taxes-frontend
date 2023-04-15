@@ -23,22 +23,24 @@
       {{ checkedRow.name }}
     </span>
   </div>
-  <div
-    class="mx-[10px] cursor-pointer flex w-[200px] justify-around items-center bg-[#2563eb] px-[15px] py-[6px] rounded-[6px]"
-  >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 50 50"
-      width="16px"
-      height="16px"
-      fill="white"
+  <RouterLink to="/createClient">
+    <div
+      class="mx-[10px] cursor-pointer flex w-[200px] justify-around items-center bg-[#2563eb] px-[15px] py-[6px] rounded-[6px]"
     >
-      <path
-        d="M 25 2 C 12.309295 2 2 12.309295 2 25 C 2 37.690705 12.309295 48 25 48 C 37.690705 48 48 37.690705 48 25 C 48 12.309295 37.690705 2 25 2 z M 25 4 C 36.609824 4 46 13.390176 46 25 C 46 36.609824 36.609824 46 25 46 C 13.390176 46 4 36.609824 4 25 C 4 13.390176 13.390176 4 25 4 z M 24 13 L 24 24 L 13 24 L 13 26 L 24 26 L 24 37 L 26 37 L 26 26 L 37 26 L 37 24 L 26 24 L 26 13 L 24 13 z"
-      />
-    </svg>
-    <button @click="createClient" class="text-[16px]">Добавить клиента</button>
-  </div>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 50 50"
+        width="16px"
+        height="16px"
+        fill="white"
+      >
+        <path
+          d="M 25 2 C 12.309295 2 2 12.309295 2 25 C 2 37.690705 12.309295 48 25 48 C 37.690705 48 48 37.690705 48 25 C 48 12.309295 37.690705 2 25 2 z M 25 4 C 36.609824 4 46 13.390176 46 25 C 46 36.609824 36.609824 46 25 46 C 13.390176 46 4 36.609824 4 25 C 4 13.390176 13.390176 4 25 4 z M 24 13 L 24 24 L 13 24 L 13 26 L 24 26 L 24 37 L 26 37 L 26 26 L 37 26 L 37 24 L 26 24 L 26 13 L 24 13 z"
+        />
+      </svg>
+      <button class="text-[16px]">Добавить клиента</button>
+    </div>
+  </RouterLink>
   <table>
     <thead>
       <tr>
@@ -172,18 +174,6 @@ const pagesList = computed(() => {
 
   return pagesList;
 });
-
-const createClient = () => {
-  const testClientInfo = {
-    inspectionId: user.value.inspectionId,
-    inn: "234324204",
-    phone: "824239843",
-    email: "4284234294",
-    clientType: "IP",
-    name: "testname",
-  };
-  clientStore.createClient(testClientInfo);
-};
 
 const remove = (arr, cb) => {
   const newArr = [];

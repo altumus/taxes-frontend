@@ -19,6 +19,14 @@ const routes = [
   },
   {
     meta: {
+      title: 'Создать клиента'
+    },
+    path: '/createClient',
+    name: 'createClient',
+    component: () => import('@/views/CreateClientView.vue')
+  },
+  {
+    meta: {
       title: "Авторизация",
     },
     path: "/login",
