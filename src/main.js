@@ -4,6 +4,8 @@ import { createApp } from "vue";
 import { darkModeKey, styleKey } from "@/config.js";
 import { useMainStore } from "@/stores/main.js";
 import { useStyleStore } from "@/stores/style.js";
+import ElementPlus from 'element-plus';
+import elementPlusRuLocale from 'element-plus/dist/locale/ru';
 import App from "./App.vue";
 import router from "./router";
 
@@ -19,7 +21,12 @@ window.addEventListener('unhandledrejection', (event) => {
 const pinia = createPinia();
 
 /* Create Vue app */
-createApp(App).use(router).use(pinia).mount("#app");
+createApp(App)
+  .use(router)
+  .use(pinia)
+  .use(ElementPlus, {
+  locale: elementPlusRuLocale
+}).mount("#app");
 
 /* Init Pinia stores */
 const mainStore = useMainStore(pinia);

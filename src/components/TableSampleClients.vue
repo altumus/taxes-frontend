@@ -14,6 +14,17 @@
     <p>This is sample modal</p>
   </CardBoxModal>
 
+  <CardBoxComponentEmpty v-if="!clients.length">
+    <div
+      class="m-[10px] mx-auto items-center flex-col justify-center cursor-pointer flex w-[200px] px-[15px] py-[6px] rounded-[6px]"
+    >
+      <span class="mb-[10px]">Клиентов нет</span>
+      <RouterLink to="/createClient">
+        <BaseButton color="info" :icon="mdiPlus" :label="'Добавить клиента'" />
+      </RouterLink>
+    </div>
+  </CardBoxComponentEmpty>
+
   <div v-if="checkedRows.length" class="p-3 bg-gray-100/50 dark:bg-slate-800">
     <span
       v-for="checkedRow in checkedRows"
@@ -23,96 +34,88 @@
       {{ checkedRow.name }}
     </span>
   </div>
-  <RouterLink to="/createClient">
+  <div v-if="clients.length">
     <div
-      class="mx-[10px] cursor-pointer flex w-[200px] justify-around items-center bg-[#2563eb] px-[15px] py-[6px] rounded-[6px]"
+      class="m-[10px] cursor-pointer flex w-[200px] px-[15px] py-[6px] rounded-[6px]"
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 50 50"
-        width="16px"
-        height="16px"
-        fill="white"
-      >
-        <path
-          d="M 25 2 C 12.309295 2 2 12.309295 2 25 C 2 37.690705 12.309295 48 25 48 C 37.690705 48 48 37.690705 48 25 C 48 12.309295 37.690705 2 25 2 z M 25 4 C 36.609824 4 46 13.390176 46 25 C 46 36.609824 36.609824 46 25 46 C 13.390176 46 4 36.609824 4 25 C 4 13.390176 13.390176 4 25 4 z M 24 13 L 24 24 L 13 24 L 13 26 L 24 26 L 24 37 L 26 37 L 26 26 L 37 26 L 37 24 L 26 24 L 26 13 L 24 13 z"
-        />
-      </svg>
-      <button class="text-[16px]">Добавить клиента</button>
+      <RouterLink to="/createClient">
+        <BaseButton color="info" :icon="mdiPlus" :label="'Добавить клиента'" />
+      </RouterLink>
     </div>
-  </RouterLink>
-  <table>
-    <thead>
-      <tr>
-        <th v-if="checkable" />
-        <th>Юридическое лицо</th>
-        <th>Номер и серия паспорта</th>
-        <th>Дата добавления</th>
-        <th />
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="client in itemsPaginated" :key="client.id">
-        <TableCheckboxCell
-          v-if="checkable"
-          @checked="checked($event, client)"
-        />
+    <table>
+      <thead>
+        <tr>
+          <th v-if="checkable" />
+          <th>Юридическое лицо</th>
+          <th>Номер и серия паспорта</th>
+          <th>Дата добавления</th>
+          <th />
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="client in itemsPaginated" :key="client.id">
+          <TableCheckboxCell
+            v-if="checkable"
+            @checked="checked($event, client)"
+          />
 
-        <td data-label="Name">
-          {{ client.name }}
-        </td>
-        <td data-label="Company">
-          {{ client.company }}
-        </td>
-        <td data-label="Created" class="lg:w-1 whitespace-nowrap">
-          <small
-            class="text-gray-500 dark:text-slate-400"
-            :title="client.created"
-            >{{ client.created }}</small
-          >
-        </td>
-        <td class="before:hidden lg:w-1 whitespace-nowrap">
-          <BaseButtons type="justify-start lg:justify-end" no-wrap>
-            <BaseButton
-              color="info"
-              :icon="mdiEye"
-              small
-              @click="isModalActive = true"
-            />
-            <BaseButton
-              color="danger"
-              :icon="mdiTrashCan"
-              small
-              @click="isModalDangerActive = true"
-            />
-          </BaseButtons>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <div class="p-3 lg:px-6 border-t border-gray-100 dark:border-slate-800">
-    <BaseLevel>
-      <BaseButtons>
-        <BaseButton
-          v-for="page in pagesList"
-          :key="page"
-          :active="page === currentPage"
-          :label="page + 1"
-          :color="page === currentPage ? 'lightDark' : 'whiteDark'"
-          small
-          @click="currentPage = page"
-        />
-      </BaseButtons>
-      <small>Page {{ currentPageHuman }} of {{ numPages }}</small>
-    </BaseLevel>
+          <td data-label="Name">
+            {{ client.name }}
+          </td>
+          <td data-label="Company">
+            {{ client.company }}
+          </td>
+          <td data-label="Created" class="lg:w-1 whitespace-nowrap">
+            <small
+              class="text-gray-500 dark:text-slate-400"
+              :title="client.created"
+              >{{ client.created }}</small
+            >
+          </td>
+          <td class="before:hidden lg:w-1 whitespace-nowrap">
+            <BaseButtons type="justify-start lg:justify-end" no-wrap>
+              <BaseButton
+                color="info"
+                :icon="mdiEye"
+                small
+                @click="isModalActive = true"
+              />
+              <BaseButton
+                color="danger"
+                :icon="mdiTrashCan"
+                small
+                @click="isModalDangerActive = true"
+              />
+            </BaseButtons>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="p-3 lg:px-6 border-t border-gray-100 dark:border-slate-800">
+      <BaseLevel>
+        <BaseButtons>
+          <BaseButton
+            v-for="page in pagesList"
+            :key="page"
+            :active="page === currentPage"
+            :label="page + 1"
+            :color="page === currentPage ? 'lightDark' : 'whiteDark'"
+            small
+            @click="currentPage = page"
+          />
+        </BaseButtons>
+        <small>Страница {{ currentPageHuman }} из {{ numPages }}</small>
+      </BaseLevel>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { computed, onMounted, ref } from "vue";
 import { useMainStore } from "@/stores/main";
-import { mdiEye, mdiTrashCan } from "@mdi/js";
+import { mdiEye, mdiTrashCan, mdiPlus } from "@mdi/js";
 import CardBoxModal from "@/components/CardBoxModal.vue";
+import CardBoxComponentEmpty from "@/components/CardBoxComponentEmpty.vue";
 import TableCheckboxCell from "@/components/TableCheckboxCell.vue";
 import BaseLevel from "@/components/BaseLevel.vue";
 import BaseButtons from "@/components/BaseButtons.vue";

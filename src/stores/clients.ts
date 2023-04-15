@@ -1,6 +1,11 @@
 import { defineStore } from "pinia";
 import * as Api from "@/js/services/client.service";
-import { CreateClientRequest } from "@/types/clientTypes";
+import {
+  CreateClientRequest,
+  CreateOrganizationRequest,
+} from "@/types/clientTypes";
+
+import { ElNotification } from "element-plus";
 
 export const useClientStore = defineStore("client", {
   state: () => ({
@@ -14,8 +19,20 @@ export const useClientStore = defineStore("client", {
     },
     async createClient(body: CreateClientRequest) {
       const client = await Api.createClient(body);
-      console.log("client", client);
       this.clients.push(client);
+      return client;
+    },
+    async createOrganization(body: CreateOrganizationRequest) {
+      try {
+        const client = await Api.createOrganization(body);
+        this.clients.push(client);
+      } catch (error) {
+        ElNotification({
+          message: "Клиент уже закреплен за другой инспекцией",
+          type: "warning",
+          duration: 4500,
+        });
+      }
     },
   },
 });

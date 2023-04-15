@@ -1,56 +1,94 @@
 <template>
   <LayoutAuthenticated>
     <SectionMain>
-      <SectionTitleLineWithButton title="Данные клиента">
-        <span />
-      </SectionTitleLineWithButton>
-      <CardBox is-form>
+      <CardBox is-form @submit.prevent="submit">
+        <SectionTitleLineWithButton title="Данные клиента">
+          <span />
+        </SectionTitleLineWithButton>
         <FormField>
-          <FormControl placeholder="ФИО" required name="fio" type="text" />
-          <FormControl placeholder="ИНН" required name="inn" type="text" />
           <FormControl
-            v-model="selectedClientOption"
-            :options="clientOptions"
+            v-model="form.fio"
+            placeholder="ФИО"
+            required
+            name="fio"
+            type="text"
+          />
+          <FormControl
+            v-model="form.inn"
+            placeholder="ИНН"
             required
             name="inn"
             type="text"
           />
           <FormControl
+            v-model="selectedClientOption"
+            :options="clientOptions"
+            required
+            name="clientOption"
+            type="text"
+          />
+          <FormControl
+            v-model="form.phone"
             placeholder="Номер телефона"
             required
             name="phone"
             type="text"
           />
-          <FormControl placeholder="Email" name="email" type="text" />
+          <FormControl
+            v-model="form.email"
+            placeholder="Email"
+            name="email"
+            type="text"
+          />
         </FormField>
-      </CardBox>
-      <SectionTitleLineWithButton title="Данные организации">
-        <span />
-      </SectionTitleLineWithButton>
-      <CardBox is-form>
+        <SectionTitleLineWithButton title="Данные организации">
+          <span />
+        </SectionTitleLineWithButton>
         <FormField>
           <FormControl
+            v-model="form.name"
             placeholder="Название организации"
             required
             name="name"
             type="text"
           />
-          <FormControl placeholder="ИНН" required name="inn" type="text" />
-          <FormControl placeholder="КПП" required name="kpp" type="text" />
-          <FormControl placeholder="ОГРН" required name="ogrn" type="text" />
           <FormControl
+            v-model="form.orgInn"
+            placeholder="ИНН"
+            required
+            name="orgInn"
+            type="text"
+          />
+          <FormControl
+            v-model="form.kpp"
+            placeholder="КПП"
+            required
+            name="kpp"
+            type="text"
+          />
+          <FormControl
+            v-model="form.ogrn"
+            placeholder="ОГРН"
+            required
+            name="ogrn"
+            type="text"
+          />
+          <FormControl
+            v-model="form.physicalAdress"
             placeholder="Физический адрес"
             required
             name="physicalAdress"
             type="text"
           />
           <FormControl
+            v-model="form.jurAdress"
             placeholder="Юрдический адрес"
             required
             name="JurAdress"
             type="text"
           />
           <FormControl
+            v-model="form.position"
             placeholder="Должность руководителя"
             required
             name="position"
@@ -64,6 +102,13 @@
             type="text"
           />
         </FormField>
+        <BaseButton
+          type="submit"
+          class="mt-[10px]"
+          color="success"
+          :icon="mdiCheck"
+          label="Создать клиета"
+        />
       </CardBox>
     </SectionMain>
   </LayoutAuthenticated>
@@ -75,8 +120,59 @@ import CardBox from "@/components/CardBox.vue";
 import FormField from "@/components/FormField.vue";
 import FormControl from "@/components/FormControl.vue";
 import SectionTitleLineWithButton from "@/components/SectionTitleLineWithButton.vue";
-import { reactive, ref, watch } from "vue";
+import BaseButton from "@/components/BaseButton.vue";
+import { ref, watch } from "vue";
+import { mdiCheck } from "@mdi/js";
 import { computed } from "@vue/reactivity";
+import { useUserStore } from "@/stores/user";
+import { useClientStore } from "@/stores/clients";
+
+const form = ref({
+  fio: "testdata",
+  inn: "testdata",
+  phone: "testdata",
+  email: "testdata",
+  name: "testdata",
+  orgInn: "testdata",
+  kpp: "testdata",
+  ogrn: "testdata",
+  physicalAdress: "testdata",
+  jurAdress: "testdata",
+  position: "testdata",
+});
+
+const userStore = useUserStore();
+const user = computed(() => {
+  return userStore.user;
+});
+
+const clientStore = useClientStore();
+
+const submit = async () => {
+  const clientData = {
+    name: form.value.fio,
+    inn: form.value.inn,
+    phone: form.value.phone,
+    email: form.value.email,
+    type: selectedClientOption.value.value,
+  };
+
+  const client = await clientStore.createClient(clientData);
+  const organizationData = {
+    name: form.value.name,
+    organizationInn: form.value.orgInn,
+    organizationKpp: form.value.kpp,
+    organizationOgrn: form.value.ogrn,
+    ownerPosition: form.value.position,
+    organizationJuridicalAddress: form.value.jurAdress,
+    organizationPhysicalAddress: form.value.physicalAdress,
+    inspectionId: user.value.inspectionId,
+    income: 0,
+    taxesTypeId: selectedTaxesOption.value.id,
+    clientId: client.id,
+  };
+  await clientStore.createOrganization(organizationData);
+};
 
 const clientOptions = [
   {
