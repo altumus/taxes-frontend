@@ -2,6 +2,7 @@ import axios from "@/js/plugins/axios";
 import {
   CreateClientRequest,
   CreateOrganizationRequest,
+  CreatePaymentRequest,
 } from "@/types/clientTypes";
 
 export async function getClientsByInspectionId(inspectionId: number) {
@@ -25,6 +26,15 @@ export async function createClient(body: CreateClientRequest) {
 export async function createOrganization(body: CreateOrganizationRequest) {
   try {
     const result = await axios.post(`/clients/add-organization`, body);
+    return result.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function createPayment(body: CreatePaymentRequest) {
+  try {
+    const result = await axios.post(`/clients/add-payment`, body);
     return result.data;
   } catch (error) {
     throw error;

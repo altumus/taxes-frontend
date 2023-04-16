@@ -4,6 +4,7 @@ import {
   Client,
   CreateClientRequest,
   CreateOrganizationRequest,
+  CreatePaymentRequest,
 } from "@/types/clientTypes";
 
 import { ElNotification } from "element-plus";
@@ -28,12 +29,11 @@ export const useClientStore = defineStore("client", {
         const client = await Api.createOrganization(body);
         this.clients.push(client);
       } catch (error) {
-        ElNotification({
-          message: "Клиент уже закреплен за другой инспекцией",
-          type: "warning",
-          duration: 4500,
-        });
+        alert("Клиент уже закреплен за другой инспекцией");
       }
+    },
+    async createPayment(body: CreatePaymentRequest) {
+      return Api.createPayment(body);
     },
   },
 });

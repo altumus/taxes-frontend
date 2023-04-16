@@ -19,6 +19,14 @@ const routes = [
   },
   {
     meta: {
+      title: 'Форма клиента'
+    },
+    path: '/clientForm',
+    name: 'clientForm',
+    component: () => import('@/views/ClientFormView.vue')
+  },
+  {
+    meta: {
       title: 'Создать клиента'
     },
     path: '/createClient',

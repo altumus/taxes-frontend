@@ -52,9 +52,6 @@ export class CreateOrganizationRequest {
   taxesTypeId: number;
 
   @IsNumber()
-  income: number;
-
-  @IsNumber()
   clientId: number;
 }
 
@@ -80,6 +77,16 @@ export type Organization = {
   ownerPosition: string;
   inspectionId: number;
   taxesTypeId: number;
-  income: number;
   clientId: number;
 };
+
+export class CreatePaymentRequest {
+  @IsNumber()
+  clientId: number;
+
+  @IsNumber()
+  organizationId: number;
+
+  @IsNumber()
+  income: number;
+}

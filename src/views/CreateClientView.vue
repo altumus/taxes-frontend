@@ -167,7 +167,6 @@ const submit = async () => {
     organizationJuridicalAddress: form.value.jurAdress,
     organizationPhysicalAddress: form.value.physicalAdress,
     inspectionId: user.value.inspectionId,
-    income: 0,
     taxesTypeId: selectedTaxesOption.value.id,
     clientId: client.id,
   };
