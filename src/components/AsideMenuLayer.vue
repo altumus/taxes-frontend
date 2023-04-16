@@ -50,7 +50,7 @@ const asideLgCloseClick = (event) => {
     >
       <div
         :class="styleStore.asideBrandStyle"
-        class="flex flex-row h-14 items-center justify-between dark:bg-slate-900"
+        class="flex flex-row h-[30px] items-center justify-between dark:bg-slate-900"
       >
         <button
           class="hidden lg:inline-block xl:hidden p-3"
