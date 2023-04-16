@@ -74,12 +74,10 @@
               >{{ localizeClientType(client.clientType) }}</small
             >
           </td>
-          <td data-label="Created" class="lg:w-1 whitespace-nowrap">
-            <small
-              class="text-gray-500 dark:text-slate-400"
-              :title="client.created"
-              >{{ client.created }}</small
-            >
+          <td data-label="owe" class="lg:w-1 whitespace-nowrap">
+            <small class="text-gray-500 dark:text-slate-400">{{
+              findClientOwe(client.id)
+            }}</small>
           </td>
           <td data-label="count" class="lg:w-1 whitespace-nowrap">
             <small
@@ -155,6 +153,22 @@ const clientStore = useClientStore();
 const clients = computed(() => {
   return clientStore.clients;
 });
+
+const findClientOwe = (clientId) => {
+  const clientIndex = clients.value.findIndex(
+    (client) => client.id === clientId
+  );
+  const filteredClients = clients.value[clientIndex].TaxesPayment.filter(
+    (payment) =>
+      new Date(payment.nextPaymentDate).getTime() < new Date().getTime()
+  );
+
+  if (filteredClients.length) {
+    return "Да";
+  } else {
+    return "Нет";
+  }
+};
 
 onMounted(() => {
   clientStore.getClientsByInspectionId(user.value.inspectionId);

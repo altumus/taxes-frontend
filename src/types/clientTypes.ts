@@ -64,6 +64,14 @@ export type Client = {
   name: string;
   phone: string;
   organizations: Organization[];
+  TaxesPayment: Taxes[];
+};
+
+export type Taxes = {
+  id: number;
+  paymentDate: string;
+  nextPaymentDate: string;
+  income: number;
 };
 
 export type Organization = {
