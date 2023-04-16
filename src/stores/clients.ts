@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import * as Api from "@/js/services/client.service";
 import {
+  Client,
   CreateClientRequest,
   CreateOrganizationRequest,
 } from "@/types/clientTypes";
@@ -9,7 +10,7 @@ import { ElNotification } from "element-plus";
 
 export const useClientStore = defineStore("client", {
   state: () => ({
-    clients: [] as Array<any>,
+    clients: [] as Client[],
   }),
   actions: {
     async getClientsByInspectionId(inspectionId: number) {

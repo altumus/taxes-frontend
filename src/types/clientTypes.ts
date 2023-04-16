@@ -57,3 +57,29 @@ export class CreateOrganizationRequest {
   @IsNumber()
   clientId: number;
 }
+
+export type Client = {
+  id: number;
+  clientType: string;
+  dateCreate: string;
+  email: string;
+  inn: string;
+  name: string;
+  phone: string;
+  organizations: Organization[];
+};
+
+export type Organization = {
+  id: number;
+  name: string;
+  organizationInn: string;
+  organizationKpp: string;
+  organizationOgrn: string;
+  organizationPhysicalAddress: string;
+  organizationJuridicalAddress: string;
+  ownerPosition: string;
+  inspectionId: number;
+  taxesTypeId: number;
+  income: number;
+  clientId: number;
+};

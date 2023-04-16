@@ -46,9 +46,11 @@
       <thead>
         <tr>
           <th v-if="checkable" />
-          <th>Юридическое лицо</th>
-          <th>Номер и серия паспорта</th>
-          <th>Дата добавления</th>
+          <th>Клиент</th>
+          <th>Телефон</th>
+          <th>Тип</th>
+          <th>Задолженности</th>
+          <th>Кол-во организаций</th>
           <th />
         </tr>
       </thead>
@@ -59,17 +61,31 @@
             @checked="checked($event, client)"
           />
 
-          <td data-label="Name">
+          <td data-label="fio">
             {{ client.name }}
           </td>
-          <td data-label="Company">
-            {{ client.company }}
+          <td data-label="phone">
+            {{ client.phone }}
+          </td>
+          <td data-label="type" class="lg:w-1 whitespace-nowrap">
+            <small
+              class="text-gray-500 dark:text-slate-400"
+              :title="client.clientType"
+              >{{ localizeClientType(client.clientType) }}</small
+            >
           </td>
           <td data-label="Created" class="lg:w-1 whitespace-nowrap">
             <small
               class="text-gray-500 dark:text-slate-400"
               :title="client.created"
               >{{ client.created }}</small
+            >
+          </td>
+          <td data-label="count" class="lg:w-1 whitespace-nowrap">
+            <small
+              class="text-gray-500 dark:text-slate-400"
+              :title="client.organizations.length"
+              >{{ client.organizations.length }}</small
             >
           </td>
           <td class="before:hidden lg:w-1 whitespace-nowrap">
@@ -120,6 +136,7 @@ import TableCheckboxCell from "@/components/TableCheckboxCell.vue";
 import BaseLevel from "@/components/BaseLevel.vue";
 import BaseButtons from "@/components/BaseButtons.vue";
 import BaseButton from "@/components/BaseButton.vue";
+import { localizeClientType } from "@/js/helpers/localization.js";
 import { useUserStore } from "@/stores/user";
 import { useClientStore } from "@/stores/clients";
 
@@ -158,13 +175,15 @@ const currentPage = ref(0);
 const checkedRows = ref([]);
 
 const itemsPaginated = computed(() =>
-  items.value.slice(
+  clients.value.slice(
     perPage.value * currentPage.value,
     perPage.value * (currentPage.value + 1)
   )
 );
 
-const numPages = computed(() => Math.ceil(items.value.length / perPage.value));
+const numPages = computed(() =>
+  Math.ceil(clients.value.length / perPage.value)
+);
 
 const currentPageHuman = computed(() => currentPage.value + 1);
 

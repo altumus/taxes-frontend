@@ -21,7 +21,7 @@ import BaseLevel from "@/components/BaseLevel.vue";
 import CardBox from "@/components/CardBox.vue";
 import { useUserStore } from "@/stores/user";
 import { computed } from "@vue/reactivity";
-import { localizePosition } from "@/js/helpers/localizePosition.js";
+import { localizePosition } from "@/js/helpers/localization.js";
 
 const userStore = useUserStore();
 
