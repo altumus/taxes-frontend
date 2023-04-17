@@ -12,9 +12,9 @@ export const localizePosition = (position) => {
 export const localizeClientType = (type) => {
   switch (type) {
     case 'IP':
-      return 'Индивидуальный предприниматель'
+      return 'ИП'
     case 'UL':
-      return 'Юридическое лицо'
+      return 'ЮЛ'
     default:
       return 'Самозанятый'
   }

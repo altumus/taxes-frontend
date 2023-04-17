@@ -25,6 +25,14 @@
     </div>
   </CardBoxComponentEmpty>
 
+  <CardBoxComponentEmpty v-if="!filteredClients.length && clients.length">
+    <div
+      class="m-[10px] mx-auto items-center flex-col justify-center cursor-pointer flex w-[200px] px-[15px] py-[6px] rounded-[6px]"
+    >
+      <span class="mb-[10px]">Клиентов с такими данными нет</span>
+    </div>
+  </CardBoxComponentEmpty>
+
   <div v-if="checkedRows.length" class="p-3 bg-gray-100/50 dark:bg-slate-800">
     <span
       v-for="checkedRow in checkedRows"
@@ -41,6 +49,12 @@
       <RouterLink to="/createClient">
         <BaseButton color="info" :icon="mdiPlus" :label="'Добавить клиента'" />
       </RouterLink>
+      <input
+        class="mx-[10px] bg-transparent rounded-[6px]"
+        v-model="filterRequest"
+        type="text"
+        placeholder="Введите данные клиента"
+      />
     </div>
     <table>
       <thead>
@@ -48,6 +62,7 @@
           <th v-if="checkable" />
           <th>Клиент</th>
           <th>Телефон</th>
+          <th>ИНН</th>
           <th>Тип</th>
           <th>Задолженности</th>
           <th>Кол-во организаций</th>
@@ -66,6 +81,13 @@
           </td>
           <td data-label="phone">
             {{ client.phone }}
+          </td>
+          <td data-label="type" class="lg:w-1 whitespace-nowrap">
+            <small
+              class="text-gray-500 dark:text-slate-400"
+              :title="client.clientType"
+              >{{ client.inn }}</small
+            >
           </td>
           <td data-label="type" class="lg:w-1 whitespace-nowrap">
             <small
@@ -134,7 +156,7 @@ import TableCheckboxCell from "@/components/TableCheckboxCell.vue";
 import BaseLevel from "@/components/BaseLevel.vue";
 import BaseButtons from "@/components/BaseButtons.vue";
 import BaseButton from "@/components/BaseButton.vue";
-import { localizeClientType } from "@/js/helpers/localization.js";
+import { localizeClientType } from "@/js/helpers/localization";
 import { useUserStore } from "@/stores/user";
 import { useClientStore } from "@/stores/clients";
 
@@ -143,6 +165,24 @@ defineProps({
 });
 
 const userStore = useUserStore();
+
+const filterRequest = ref("");
+
+const filteredClients = computed(() => {
+  return clients.value.filter(
+    (client) =>
+      client.clientType
+        .toLowerCase()
+        .includes(filterRequest.value.toLocaleLowerCase()) ||
+      client.email.toLowerCase().includes(filterRequest.value.toLowerCase()) ||
+      client.name.toLowerCase().includes(filterRequest.value.toLowerCase()) ||
+      client.inn.toLowerCase().includes(filterRequest.value.toLowerCase()) ||
+      client.phone.toLowerCase().includes(filterRequest.value.toLowerCase()) ||
+      localizeClientType(client.clientType)
+        .toLowerCase()
+        .includes(filterRequest.value.toLowerCase())
+  );
+});
 
 const user = computed(() => {
   return userStore.user;
@@ -155,23 +195,24 @@ const clients = computed(() => {
 });
 
 const findClientOwe = (clientId) => {
-  const clientIndex = clients.value.findIndex(
+  const clientIndex = filteredClients.value.findIndex(
     (client) => client.id === clientId
   );
-  const filteredClients = clients.value[clientIndex].TaxesPayment.filter(
+  if (clientIndex === -1) return;
+  const clearedClients = filteredClients.value[clientIndex].TaxesPayment.filter(
     (payment) =>
       new Date(payment.nextPaymentDate).getTime() < new Date().getTime()
   );
 
-  if (filteredClients.length) {
+  if (clearedClients.length) {
     return "Да";
   } else {
     return "Нет";
   }
 };
 
-onMounted(() => {
-  clientStore.getClientsByInspectionId(user.value.inspectionId);
+onMounted(async () => {
+  await clientStore.getClientsByInspectionId(user.value.inspectionId);
 });
 
 const mainStore = useMainStore();
@@ -189,14 +230,14 @@ const currentPage = ref(0);
 const checkedRows = ref([]);
 
 const itemsPaginated = computed(() =>
-  clients.value.slice(
+  filteredClients.value.slice(
     perPage.value * currentPage.value,
     perPage.value * (currentPage.value + 1)
   )
 );
 
 const numPages = computed(() =>
-  Math.ceil(clients.value.length / perPage.value)
+  Math.ceil(filteredClients.value.length / perPage.value)
 );
 
 const currentPageHuman = computed(() => currentPage.value + 1);

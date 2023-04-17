@@ -11,14 +11,14 @@ export default defineComponent({
   components: {
     RouterView,
   },
-  mounted() {
+  async mounted() {
     const login = String(localStorage.getItem("login"));
     const password = String(localStorage.getItem("password"));
     if (!login || !password) {
       this.$router.push("/login");
       return;
     }
-    this.userStore.login(login, password, true);
+    await this.userStore.login(login, password, true);
   },
   computed: {
     ...mapStores(useUserStore),

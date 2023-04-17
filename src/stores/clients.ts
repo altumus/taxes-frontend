@@ -26,10 +26,17 @@ export const useClientStore = defineStore("client", {
     },
     async createOrganization(body: CreateOrganizationRequest) {
       try {
-        const client = await Api.createOrganization(body);
-        this.clients.push(client);
+        const organization = await Api.createOrganization(body);
+        const ownerIndex = this.clients.findIndex(
+          (client) => client.id === organization.clientId
+        );
+        this.clients[ownerIndex].organizations.push(organization);
       } catch (error) {
-        alert("Клиент уже закреплен за другой инспекцией");
+        ElNotification({
+          message: "Клиент уже закреплен за другой инспекцией",
+          duration: 1500,
+          type: "error",
+        });
       }
     },
     async createPayment(body: CreatePaymentRequest) {

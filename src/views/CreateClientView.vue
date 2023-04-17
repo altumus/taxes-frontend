@@ -103,6 +103,7 @@
           />
         </FormField>
         <BaseButton
+          v-if="!isLoading"
           type="submit"
           class="mt-[10px]"
           color="success"
@@ -114,6 +115,7 @@
   </LayoutAuthenticated>
 </template>
 <script setup>
+import { ElNotification } from "element-plus";
 import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
 import SectionMain from "@/components/SectionMain.vue";
 import CardBox from "@/components/CardBox.vue";
@@ -147,8 +149,10 @@ const user = computed(() => {
 });
 
 const clientStore = useClientStore();
+const isLoading = ref(false);
 
 const submit = async () => {
+  isLoading.value = true;
   const clientData = {
     name: form.value.fio,
     inn: form.value.inn,
@@ -171,6 +175,12 @@ const submit = async () => {
     clientId: client.id,
   };
   await clientStore.createOrganization(organizationData);
+
+  ElNotification({
+    message: "Клиент успешно создан",
+    duration: 4500,
+    type: "success",
+  });
 };
 
 const clientOptions = [
