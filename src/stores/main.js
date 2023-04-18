@@ -1,4 +1,3 @@
-import axios from "axios";
 import { defineStore } from "pinia";
 
 export const useMainStore = defineStore("main", {
@@ -22,19 +21,6 @@ export const useMainStore = defineStore("main", {
       if (payload.email) {
         this.userEmail = payload.email;
       }
-    },
-
-    fetch(sampleDataKey) {
-      axios
-        .get(`data-sources/${sampleDataKey}.json`)
-        .then((r) => {
-          if (r.data && r.data.data) {
-            this[sampleDataKey] = r.data.data;
-          }
-        })
-        .catch((error) => {
-          alert(error.message);
-        });
     },
   },
 });

@@ -40,3 +40,14 @@ export async function createPayment(body: CreatePaymentRequest) {
     throw error;
   }
 }
+
+export async function getClientInfo(inspectionId: number, clientId: number) {
+  try {
+    const result = await axios.get(
+      `/clients/client-info/${inspectionId}/${clientId}`
+    );
+    return result.data;
+  } catch (error) {
+    throw error;
+  }
+}

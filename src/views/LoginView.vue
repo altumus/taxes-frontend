@@ -23,7 +23,7 @@ const userStore = useUserStore();
 
 const submit = () => {
   userStore.login(form.login, form.pass, false);
-  router.push("/tables");
+  router.push("/clients");
 };
 </script>
 

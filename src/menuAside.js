@@ -2,7 +2,7 @@ import { mdiAccountCircle, mdiTable } from "@mdi/js";
 
 export default [
   {
-    to: "/tables",
+    to: "/clients",
     label: "Юр. Лица",
     icon: mdiTable,
   },

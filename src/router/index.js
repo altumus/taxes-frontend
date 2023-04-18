@@ -3,10 +3,10 @@ import { createRouter, createWebHistory } from "vue-router";
 const routes = [
   {
     meta: {
-      title: "Юр. Лица",
+      title: "Клиенты",
     },
-    path: "/tables",
-    name: "tables",
+    path: "/clients",
+    name: "clients",
     component: () => import("@/views/TablesView.vue"),
   },
   {
@@ -32,6 +32,14 @@ const routes = [
     path: '/createClient',
     name: 'createClient',
     component: () => import('@/views/CreateClientView.vue')
+  },
+  {
+    meta: {
+      title: 'Информация о клиенте'
+    },
+    path: '/clientDetails/:clientId',
+    name: 'clientDetails',
+    component: () => import ('@/views/ClientDetailsView.vue')
   },
   {
     meta: {

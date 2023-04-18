@@ -39,6 +39,11 @@ export const useClientStore = defineStore("client", {
         });
       }
     },
+    async getClientInfo(inspectionId: number, clientId: number) {
+      const client = await Api.getClientInfo(inspectionId, clientId);
+      this.clients.push(client);
+      return client;
+    },
     async createPayment(body: CreatePaymentRequest) {
       return Api.createPayment(body);
     },

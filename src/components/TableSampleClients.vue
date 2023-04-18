@@ -25,23 +25,6 @@
     </div>
   </CardBoxComponentEmpty>
 
-  <CardBoxComponentEmpty v-if="!filteredClients.length && clients.length">
-    <div
-      class="m-[10px] mx-auto items-center flex-col justify-center cursor-pointer flex w-[200px] px-[15px] py-[6px] rounded-[6px]"
-    >
-      <span class="mb-[10px]">Клиентов с такими данными нет</span>
-    </div>
-  </CardBoxComponentEmpty>
-
-  <div v-if="checkedRows.length" class="p-3 bg-gray-100/50 dark:bg-slate-800">
-    <span
-      v-for="checkedRow in checkedRows"
-      :key="checkedRow.id"
-      class="inline-block px-2 py-1 rounded-sm mr-2 text-sm bg-gray-100 dark:bg-slate-700"
-    >
-      {{ checkedRow.name }}
-    </span>
-  </div>
   <div v-if="clients.length">
     <div
       class="m-[10px] cursor-pointer flex w-[200px] px-[15px] py-[6px] rounded-[6px]"
@@ -53,13 +36,12 @@
         class="mx-[10px] bg-transparent rounded-[6px]"
         v-model="filterRequest"
         type="text"
-        placeholder="Введите данные клиента"
+        placeholder="Введите данные"
       />
     </div>
     <table>
       <thead>
         <tr>
-          <th v-if="checkable" />
           <th>Клиент</th>
           <th>Телефон</th>
           <th>ИНН</th>
@@ -71,11 +53,6 @@
       </thead>
       <tbody>
         <tr v-for="client in itemsPaginated" :key="client.id">
-          <TableCheckboxCell
-            v-if="checkable"
-            @checked="checked($event, client)"
-          />
-
           <td data-label="fio">
             {{ client.name }}
           </td>
@@ -127,7 +104,10 @@
         </tr>
       </tbody>
     </table>
-    <div class="p-3 lg:px-6 border-t border-gray-100 dark:border-slate-800">
+    <div
+      v-if="pagesList.length"
+      class="p-3 lg:px-6 border-t border-gray-100 dark:border-slate-800"
+    >
       <BaseLevel>
         <BaseButtons>
           <BaseButton
@@ -144,6 +124,13 @@
       </BaseLevel>
     </div>
   </div>
+  <CardBoxComponentEmpty v-if="!filteredClients.length && clients.length">
+    <div
+      class="m-[10px] mx-auto items-center flex-col justify-center cursor-pointer flex w-[200px] px-[15px] py-[6px] rounded-[6px]"
+    >
+      <span class="mb-[10px]">Клиентов с такими данными нет</span>
+    </div>
+  </CardBoxComponentEmpty>
 </template>
 
 <script setup>

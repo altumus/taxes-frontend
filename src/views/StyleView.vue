@@ -16,7 +16,7 @@ const router = useRouter();
 
 const click = (slug) => {
   styleStore.setStyle(slug);
-  router.push("/tables");
+  router.push("/clients");
 };
 </script>
 
