@@ -6,7 +6,6 @@ import { useMainStore } from "@/stores/main.js";
 import { useStyleStore } from "@/stores/style.js";
 import ElementPlus from 'element-plus';
 import elementPlusRuLocale from 'element-plus/dist/locale/ru';
-import "element-plus/es/components/input/style/css";
 
 import App from "./App.vue";
 import router from "./router";

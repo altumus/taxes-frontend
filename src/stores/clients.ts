@@ -7,6 +7,7 @@ import {
   CreatePaymentRequest,
 } from "@/types/clientTypes";
 
+import "element-plus/es/components/notification/style/css";
 import { ElNotification } from "element-plus";
 
 export const useClientStore = defineStore("client", {
@@ -21,16 +22,12 @@ export const useClientStore = defineStore("client", {
     },
     async createClient(body: CreateClientRequest) {
       const client = await Api.createClient(body);
-      this.clients.push(client);
       return client;
     },
     async createOrganization(body: CreateOrganizationRequest) {
       try {
         const organization = await Api.createOrganization(body);
-        const ownerIndex = this.clients.findIndex(
-          (client) => client.id === organization.clientId
-        );
-        this.clients[ownerIndex].organizations.push(organization);
+        return organization;
       } catch (error) {
         ElNotification({
           message: "Клиент уже закреплен за другой инспекцией",

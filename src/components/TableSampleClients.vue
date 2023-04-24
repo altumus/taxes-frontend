@@ -42,7 +42,7 @@
     <table>
       <thead>
         <tr>
-          <th>Клиент</th>
+          <th>ФИО</th>
           <th>Телефон</th>
           <th>ИНН</th>
           <th>Тип</th>
@@ -53,32 +53,32 @@
       </thead>
       <tbody>
         <tr v-for="client in itemsPaginated" :key="client.id">
-          <td data-label="fio">
+          <td data-label="ФИО">
             {{ client.name }}
           </td>
-          <td data-label="phone">
+          <td data-label="Телефон">
             {{ client.phone }}
           </td>
-          <td data-label="type" class="lg:w-1 whitespace-nowrap">
+          <td data-label="ИНН" class="lg:w-1 whitespace-nowrap">
             <small
               class="text-gray-500 dark:text-slate-400"
               :title="client.clientType"
               >{{ client.inn }}</small
             >
           </td>
-          <td data-label="type" class="lg:w-1 whitespace-nowrap">
+          <td data-label="Тип" class="lg:w-1 whitespace-nowrap">
             <small
               class="text-gray-500 dark:text-slate-400"
               :title="client.clientType"
               >{{ localizeClientType(client.clientType) }}</small
             >
           </td>
-          <td data-label="owe" class="lg:w-1 whitespace-nowrap">
+          <td data-label="Задолженности" class="lg:w-1 whitespace-nowrap">
             <small class="text-gray-500 dark:text-slate-400">{{
               findClientOwe(client.id)
             }}</small>
           </td>
-          <td data-label="count" class="lg:w-1 whitespace-nowrap">
+          <td data-label="Кол-во организаций" class="lg:w-1 whitespace-nowrap">
             <small
               class="text-gray-500 dark:text-slate-400"
               :title="client.organizations.length"

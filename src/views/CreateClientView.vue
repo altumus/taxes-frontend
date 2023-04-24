@@ -115,6 +115,7 @@
   </LayoutAuthenticated>
 </template>
 <script setup>
+import "element-plus/es/components/notification/style/css";
 import { ElNotification } from "element-plus";
 import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
 import SectionMain from "@/components/SectionMain.vue";
@@ -174,12 +175,12 @@ const submit = async () => {
     taxesTypeId: selectedTaxesOption.value.id,
     clientId: client.id,
   };
-  await clientStore.createOrganization(organizationData);
-
-  ElNotification({
-    message: "Клиент успешно создан",
-    duration: 4500,
-    type: "success",
+  clientStore.createOrganization(organizationData).then(() => {
+    ElNotification({
+      message: "Клиент успешно создан",
+      duration: 4500,
+      type: "success",
+    });
   });
 };
 
