@@ -91,7 +91,7 @@
                 color="info"
                 :icon="mdiEye"
                 small
-                @click="isModalActive = true"
+                @click="viewClientDetails(client.id)"
               />
               <BaseButton
                 color="danger"
@@ -146,6 +146,7 @@ import BaseButton from "@/components/BaseButton.vue";
 import { localizeClientType } from "@/js/helpers/localization";
 import { useUserStore } from "@/stores/user";
 import { useClientStore } from "@/stores/clients";
+import router from "@/router";
 
 defineProps({
   checkable: Boolean,
@@ -207,6 +208,10 @@ const mainStore = useMainStore();
 const items = computed(() => mainStore.clients);
 
 const isModalActive = ref(false);
+
+const viewClientDetails = (clientId) => {
+  router.push(`/clientDetails/${clientId}`);
+};
 
 const isModalDangerActive = ref(false);
 
