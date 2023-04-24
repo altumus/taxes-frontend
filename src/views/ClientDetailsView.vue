@@ -121,6 +121,9 @@
             </div>
           </CardBox>
         </div>
+        <SectionTitleLineWithButton title="Информация о налогах">
+          <span />
+        </SectionTitleLineWithButton>
         <div
           v-if="organization?.TaxesPayment"
           v-for="(tax, index) in organization.TaxesPayment"
@@ -163,6 +166,29 @@
               <span class="text-gray-500 text-[13px]"> Уплачено </span>
               <span class="text-lg">
                 {{ isTaxPayed(tax.nextPaymentDate, organizationIndex) }}
+              </span>
+            </div>
+          </CardBox>
+        </div>
+        <SectionTitleLineWithButton title="Оплаченные налоги">
+          <span />
+        </SectionTitleLineWithButton>
+        <div
+          v-if="organization?.TaxesSuccessPayment"
+          v-for="(tax, index) in organization.TaxesSuccessPayment"
+          class="grid grid-cols-2 gap-6 mb-6"
+        >
+          <CardBox>
+            <div class="flex flex-col">
+              <span class="text-gray-500 text-[13px]"> Оплаченный налог </span>
+              <span class="text-lg"> {{ tax.paymentSum }} ₽ </span>
+            </div>
+          </CardBox>
+          <CardBox>
+            <div class="flex flex-col">
+              <span class="text-gray-500 text-[13px]"> Оплачен </span>
+              <span class="text-lg">
+                {{ readableDate(tax.paymentDate) }}
               </span>
             </div>
           </CardBox>
