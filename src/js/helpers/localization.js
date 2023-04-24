@@ -1,3 +1,5 @@
+import { TaxesTypes } from "@/types/clientTypes"
+
 export const localizePosition = (position) => {
   switch (position) {
     case 'ADMIN':
@@ -29,4 +31,8 @@ export const readableDate = (userDate) => {
 
   const formattedDate = `${day < 10 ? '0' + day : day}.${month < 10 ? '0' + month: month}.${year}`
   return formattedDate
+}
+
+export const getTaxesType = (id) => {
+  return TaxesTypes[id - 1]
 }

@@ -57,7 +57,7 @@
         v-if="client?.organizations"
         v-for="(organization, organizationIndex) in client?.organizations"
       >
-        <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 mb-6">
+        <div class="grid grid-cols-1 gap-6 mb-6">
           <CardBox>
             <div class="flex flex-col">
               <span class="text-gray-500 text-[13px]"> Название </span>
@@ -66,6 +66,8 @@
               </span>
             </div>
           </CardBox>
+        </div>
+        <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 mb-6">
           <CardBox>
             <div class="flex flex-col">
               <span class="text-gray-500 text-[13px]"> ИНН </span>
@@ -82,8 +84,6 @@
               </span>
             </div>
           </CardBox>
-        </div>
-        <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 mb-6">
           <CardBox>
             <div class="flex flex-col">
               <span class="text-gray-500 text-[13px]"> ОГРН </span>
@@ -92,6 +92,8 @@
               </span>
             </div>
           </CardBox>
+        </div>
+        <div class="grid grid-cols-1 gap-6 lg:grid-cols-2 mb-6">
           <CardBox>
             <div class="flex flex-col">
               <span class="text-gray-500 text-[13px]"> Физический адрес </span>
@@ -109,7 +111,7 @@
             </div>
           </CardBox>
         </div>
-        <div class="grid grid-cols-1 gap-6 mb-6">
+        <div class="grid grid-cols-3 gap-6 mb-6">
           <CardBox>
             <div class="flex flex-col">
               <span class="text-gray-500 text-[13px]">
@@ -120,6 +122,24 @@
               </span>
             </div>
           </CardBox>
+          <CardBox>
+            <div class="flex flex-col">
+              <span class="text-gray-500 text-[13px]">
+                Тип налогообложения
+              </span>
+              <span class="text-lg">
+                {{ getTaxesType(organization.taxesTypeId).title }}
+              </span>
+            </div>
+          </CardBox>
+          <CardBox>
+            <div class="flex flex-col">
+              <span class="text-gray-500 text-[13px]"> Ключевая ставка </span>
+              <span class="text-lg">
+                {{ getTaxesType(organization.taxesTypeId).bid }} %
+              </span>
+            </div>
+          </CardBox>
         </div>
         <SectionTitleLineWithButton title="Информация о налогах">
           <span />
@@ -127,48 +147,75 @@
         <div
           v-if="organization?.TaxesPayment"
           v-for="(tax, index) in organization.TaxesPayment"
-          class="grid grid-cols-5 gap-6 mb-6"
         >
-          <CardBox>
-            <div class="flex flex-col">
-              <span class="text-gray-500 text-[13px]">
-                Прибыль организации
-              </span>
-              <span class="text-lg"> {{ tax.income }} ₽ </span>
-            </div>
-          </CardBox>
-          <CardBox>
-            <div class="flex flex-col">
-              <span class="text-gray-500 text-[13px]"> Прибыль на момент </span>
-              <span class="text-lg">
-                {{ readableDate(tax.paymentDate) }}
-              </span>
-            </div>
-          </CardBox>
-          <CardBox>
-            <div class="flex flex-col">
-              <span class="text-gray-500 text-[13px]">
-                Заплатить налог до
-              </span>
-              <span class="text-lg">
-                {{ readableDate(tax.nextPaymentDate) }}
-              </span>
-            </div>
-          </CardBox>
-          <CardBox>
-            <div class="flex flex-col">
-              <span class="text-gray-500 text-[13px]"> Размер налога </span>
-              <span class="text-lg"> {{ tax.mustPay }} ₽ </span>
-            </div>
-          </CardBox>
-          <CardBox>
-            <div class="flex flex-col">
-              <span class="text-gray-500 text-[13px]"> Уплачено </span>
-              <span class="text-lg">
-                {{ isTaxPayed(tax.nextPaymentDate, organizationIndex) }}
-              </span>
-            </div>
-          </CardBox>
+          <div class="grid grid-cols-2 gap-6 mb-6">
+            <CardBox>
+              <div class="flex flex-col">
+                <span class="text-gray-500 text-[13px]">
+                  Доход организации
+                </span>
+                <span class="text-lg"> {{ formatNumber(tax.income) }} ₽ </span>
+              </div>
+            </CardBox>
+            <CardBox>
+              <div class="flex flex-col">
+                <span class="text-gray-500 text-[13px]"> Доход на момент </span>
+                <span class="text-lg">
+                  {{ readableDate(tax.paymentDate) }}
+                  ({{ defineQuartal(tax.paymentDate) }})
+                </span>
+              </div>
+            </CardBox>
+          </div>
+          <div class="grid grid-cols-2 gap-6 mb-6">
+            <CardBox>
+              <div class="flex flex-col">
+                <span class="text-gray-500 text-[13px]"> Размер налога </span>
+                <span class="text-lg"> {{ formatNumber(tax.mustPay) }} ₽ </span>
+              </div>
+            </CardBox>
+            <CardBox>
+              <div class="flex flex-col">
+                <span class="text-gray-500 text-[13px]">
+                  Заплатить налог до
+                </span>
+                <span class="text-lg">
+                  {{ readableDate(tax.nextPaymentDate) }}
+                  ({{ defineQuartal(tax.nextPaymentDate) }})
+                </span>
+              </div>
+            </CardBox>
+          </div>
+          <div class="grid grid-cols-1 gap-6 mb-6">
+            <CardBox>
+              <div class="flex flex-col">
+                <span class="text-gray-500 text-[13px]"> Оплачен </span>
+                <span class="text-lg">
+                  {{ isTaxPayed(tax.nextPaymentDate, organizationIndex) }}
+                  ({{ defineQuartal(tax.nextPaymentDate) }})
+                </span>
+              </div>
+            </CardBox>
+          </div>
+          <div class="grid grid-cols-1 gap-6 mb-6">
+            <CardBox>
+              <div class="flex flex-col">
+                <span class="text-gray-500 text-[13px]"> Долг </span>
+                <span class="text-lg">
+                  {{
+                    formatNumber(
+                      oweSum(
+                        organization.TaxesSuccessPayment,
+                        defineQuartal(tax.nextPaymentDate),
+                        tax.mustPay
+                      )
+                    )
+                  }}
+                  ₽
+                </span>
+              </div>
+            </CardBox>
+          </div>
         </div>
         <SectionTitleLineWithButton title="Оплаченные налоги">
           <span />
@@ -181,7 +228,9 @@
           <CardBox>
             <div class="flex flex-col">
               <span class="text-gray-500 text-[13px]"> Оплаченный налог </span>
-              <span class="text-lg"> {{ tax.paymentSum }} ₽ </span>
+              <span class="text-lg">
+                {{ formatNumber(tax.paymentSum) }} ₽
+              </span>
             </div>
           </CardBox>
           <CardBox>
@@ -189,6 +238,7 @@
               <span class="text-gray-500 text-[13px]"> Оплачен </span>
               <span class="text-lg">
                 {{ readableDate(tax.paymentDate) }}
+                ({{ defineQuartal(tax.paymentDate) }})
               </span>
             </div>
           </CardBox>
@@ -204,12 +254,17 @@ import { useRouter } from "vue-router";
 import { useClientStore } from "@/stores/clients";
 import { useUserStore } from "@/stores/user";
 import { onMounted, ref } from "vue";
-import { localizeClientType, readableDate } from "@/js/helpers/localization";
+import {
+  localizeClientType,
+  readableDate,
+  getTaxesType,
+} from "@/js/helpers/localization";
 
 import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
 import SectionMain from "@/components/SectionMain.vue";
 import SectionTitleLineWithButton from "@/components/SectionTitleLineWithButton.vue";
 import CardBox from "@/components/CardBox.vue";
+import { SuccessTaxes } from "@/types/clientTypes";
 
 const clientsStore = useClientStore();
 const userStore = useUserStore();
@@ -232,21 +287,39 @@ const client = computed(() => {
   return clientsStore.clients[0];
 });
 
+const formatNumber = (value) => {
+  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+};
+
+const oweSum = (
+  successPayments: SuccessTaxes[],
+  quartal: string,
+  mustPay: string
+) => {
+  successPayments.filter(
+    (payment) => defineQuartal(payment.paymentDate) === quartal
+  );
+  let payed = 0;
+  for (let i = 0; i < successPayments.length; i++) {
+    payed += Number(successPayments[i].paymentSum);
+  }
+  return Number(Number(mustPay) - Number(payed)).toFixed(2);
+};
+
 const isTaxPayed = (nextPaymentDate, organizationIndex) => {
   if (!nextPaymentDate || !!organizationIndex) return;
   const payedTaxes =
     clientsStore.clients[0].organizations[organizationIndex]
       .TaxesSuccessPayment;
-
-  const nextPayment = new Date(nextPaymentDate);
   for (let i = 0; i < payedTaxes.length; i++) {
     if (
-      defineQuartal(payedTaxes[i].paymentDate) === defineQuartal(nextPayment)
+      defineQuartal(payedTaxes[i].paymentDate) ===
+      defineQuartal(nextPaymentDate)
     ) {
       return readableDate(payedTaxes[i].paymentDate);
     }
   }
-  return "Не уплачено";
+  return "Не Оплачен";
 };
 
 const defineQuartal = (paymentDate) => {

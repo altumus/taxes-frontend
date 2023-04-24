@@ -20,113 +20,121 @@
       </RouterLink>
     </div>
   </CardBoxComponentEmpty>
-
-  <div v-if="clients.length">
-    <div
-      class="m-[10px] cursor-pointer flex w-[200px] px-[15px] py-[6px] rounded-[6px]"
-    >
-      <RouterLink to="/createClient">
-        <BaseButton color="info" :icon="mdiPlus" :label="'Добавить клиента'" />
-      </RouterLink>
-      <input
-        class="mx-[10px] bg-transparent rounded-[6px]"
-        v-model="filterRequest"
-        type="text"
-        placeholder="Введите данные"
-      />
-    </div>
-    <table>
-      <thead>
-        <tr>
-          <th>ФИО</th>
-          <th>Телефон</th>
-          <th>ИНН</th>
-          <th>Тип</th>
-          <th>Задолженности</th>
-          <th>Кол-во организаций</th>
-          <th />
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="client in itemsPaginated" :key="client.id">
-          <td data-label="ФИО">
-            {{ client.name }}
-          </td>
-          <td data-label="Телефон">
-            {{ client.phone }}
-          </td>
-          <td data-label="ИНН" class="lg:w-1 whitespace-nowrap">
-            <small
-              class="text-gray-500 dark:text-slate-400"
-              :title="client.clientType"
-              >{{ client.inn }}</small
-            >
-          </td>
-          <td data-label="Тип" class="lg:w-1 whitespace-nowrap">
-            <small
-              class="text-gray-500 dark:text-slate-400"
-              :title="client.clientType"
-              >{{ localizeClientType(client.clientType) }}</small
-            >
-          </td>
-          <td data-label="Задолженности" class="lg:w-1 whitespace-nowrap">
-            <small class="text-gray-500 dark:text-slate-400">{{
-              findClientOwe(client.id)
-            }}</small>
-          </td>
-          <td data-label="Кол-во организаций" class="lg:w-1 whitespace-nowrap">
-            <small
-              class="text-gray-500 dark:text-slate-400"
-              :title="client.organizations.length"
-              >{{ client.organizations.length }}</small
-            >
-          </td>
-          <td class="before:hidden lg:w-1 whitespace-nowrap">
-            <BaseButtons type="justify-start lg:justify-end" no-wrap>
-              <BaseButton
-                color="info"
-                :icon="mdiEye"
-                small
-                @click="viewClientDetails(client.id)"
-              />
-              <BaseButton
-                color="danger"
-                :icon="mdiTrashCan"
-                small
-                @click="showDeleteModal(client.id)"
-              />
-            </BaseButtons>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <div
-      v-if="pagesList.length"
-      class="p-3 lg:px-6 border-t border-gray-100 dark:border-slate-800"
-    >
-      <BaseLevel>
-        <BaseButtons>
+  <div v-if="clients">
+    <div v-if="clients.length">
+      <div
+        class="m-[10px] cursor-pointer flex w-[200px] px-[15px] py-[6px] rounded-[6px]"
+      >
+        <RouterLink to="/createClient">
           <BaseButton
-            v-for="page in pagesList"
-            :key="page"
-            :active="page === currentPage"
-            :label="page + 1"
-            :color="page === currentPage ? 'lightDark' : 'whiteDark'"
-            small
-            @click="currentPage = page"
+            color="info"
+            :icon="mdiPlus"
+            :label="'Добавить клиента'"
           />
-        </BaseButtons>
-        <small>Страница {{ currentPageHuman }} из {{ numPages }}</small>
-      </BaseLevel>
+        </RouterLink>
+        <input
+          class="mx-[10px] bg-transparent rounded-[6px]"
+          v-model="filterRequest"
+          type="text"
+          placeholder="Введите данные"
+        />
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>ФИО</th>
+            <th>Телефон</th>
+            <th>ИНН</th>
+            <th>Тип</th>
+            <th>Задолженности</th>
+            <th>Кол-во организаций</th>
+            <th />
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="client in itemsPaginated" :key="client.id">
+            <td data-label="ФИО">
+              {{ client.name }}
+            </td>
+            <td data-label="Телефон">
+              {{ client.phone }}
+            </td>
+            <td data-label="ИНН" class="lg:w-1 whitespace-nowrap">
+              <small
+                class="text-gray-500 dark:text-slate-400"
+                :title="client.clientType"
+                >{{ client.inn }}</small
+              >
+            </td>
+            <td data-label="Тип" class="lg:w-1 whitespace-nowrap">
+              <small
+                class="text-gray-500 dark:text-slate-400"
+                :title="client.clientType"
+                >{{ localizeClientType(client.clientType) }}</small
+              >
+            </td>
+            <td data-label="Задолженности" class="lg:w-1 whitespace-nowrap">
+              <small class="text-gray-500 dark:text-slate-400">{{
+                client.haveOwe ? "Да" : "Нет"
+              }}</small>
+            </td>
+            <td
+              data-label="Кол-во организаций"
+              class="lg:w-1 whitespace-nowrap"
+            >
+              <small
+                class="text-gray-500 dark:text-slate-400"
+                :title="client.organizations.length"
+                >{{ client.organizations.length }}</small
+              >
+            </td>
+            <td class="before:hidden lg:w-1 whitespace-nowrap">
+              <BaseButtons type="justify-start lg:justify-end" no-wrap>
+                <BaseButton
+                  color="info"
+                  :icon="mdiEye"
+                  small
+                  @click="viewClientDetails(client.id)"
+                />
+                <BaseButton
+                  color="danger"
+                  :icon="mdiTrashCan"
+                  small
+                  @click="showDeleteModal(client.id)"
+                />
+              </BaseButtons>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div
+        v-if="pagesList.length"
+        class="p-3 lg:px-6 border-t border-gray-100 dark:border-slate-800"
+      >
+        <BaseLevel>
+          <BaseButtons>
+            <BaseButton
+              v-for="page in pagesList"
+              :key="page"
+              :active="page === currentPage"
+              :label="page + 1"
+              :color="page === currentPage ? 'lightDark' : 'whiteDark'"
+              small
+              @click="currentPage = page"
+            />
+          </BaseButtons>
+          <small>Страница {{ currentPageHuman }} из {{ numPages }}</small>
+        </BaseLevel>
+      </div>
     </div>
+    <CardBoxComponentEmpty v-if="!filteredClients.length && clients.length">
+      <div
+        class="m-[10px] mx-auto items-center flex-col justify-center cursor-pointer flex w-[200px] px-[15px] py-[6px] rounded-[6px]"
+      >
+        <span class="mb-[10px]">Клиентов с такими данными нет</span>
+      </div>
+    </CardBoxComponentEmpty>
   </div>
-  <CardBoxComponentEmpty v-if="!filteredClients.length && clients.length">
-    <div
-      class="m-[10px] mx-auto items-center flex-col justify-center cursor-pointer flex w-[200px] px-[15px] py-[6px] rounded-[6px]"
-    >
-      <span class="mb-[10px]">Клиентов с такими данными нет</span>
-    </div>
-  </CardBoxComponentEmpty>
 </template>
 
 <script setup>
@@ -155,6 +163,7 @@ const userStore = useUserStore();
 const filterRequest = ref("");
 
 const filteredClients = computed(() => {
+  if (!clients.value) return [];
   return clients.value.filter(
     (client) =>
       client.clientType
@@ -196,23 +205,6 @@ const deleteClient = () => {
       showClose: true,
     });
   });
-};
-
-const findClientOwe = (clientId) => {
-  const clientIndex = filteredClients.value.findIndex(
-    (client) => client.id === clientId
-  );
-  if (clientIndex === -1) return;
-  const clearedClients = filteredClients.value[clientIndex].TaxesPayment.filter(
-    (payment) =>
-      new Date(payment.nextPaymentDate).getTime() < new Date().getTime()
-  );
-
-  if (clearedClients.length) {
-    return "Да";
-  } else {
-    return "Нет";
-  }
 };
 
 onMounted(async () => {

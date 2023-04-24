@@ -64,6 +64,7 @@ export type Client = {
   name: string;
   phone: string;
   organizations: Organization[];
+  haveOwe: boolean;
 };
 
 export type Taxes = {
@@ -107,3 +108,38 @@ export class CreatePaymentRequest {
   @IsNumber()
   income: number;
 }
+
+export const TaxesTypes = [
+  {
+    title: "УСН ДОХОДЫ ИП",
+    bid: 6,
+  },
+  {
+    title: "УСН ДОХОДЫ МИНУС РАСХОДЫ ИП",
+    bid: 15,
+  },
+  {
+    title: "ПСН",
+    bid: 6,
+  },
+  {
+    title: "НПМ",
+    bid: 4,
+  },
+  {
+    title: "УСН ДОХОДЫ ЮЛ",
+    bid: 6,
+  },
+  {
+    title: "УСН ДОХОДЫ МИНУС РАСХОДЫ",
+    bid: 15,
+  },
+  {
+    title: "ОРН ИП",
+    bid: 13,
+  },
+  {
+    title: "ОРН ЮЛ",
+    bid: 20,
+  },
+];
