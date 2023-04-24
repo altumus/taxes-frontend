@@ -1,17 +1,13 @@
 <template>
-  <CardBoxModal v-model="isModalActive" title="Sample modal">
-    <p>Lorem ipsum dolor sit amet <b>adipiscing elit</b></p>
-    <p>This is sample modal</p>
-  </CardBoxModal>
-
   <CardBoxModal
     v-model="isModalDangerActive"
-    title="Please confirm"
+    title="Подтверждение удаления"
     button="danger"
+    button-label="Подтвердить"
     has-cancel
+    @confirm="deleteClient"
   >
-    <p>Lorem ipsum dolor sit amet <b>adipiscing elit</b></p>
-    <p>This is sample modal</p>
+    <p>Вы уверены, что хотите удалить клиента?</p>
   </CardBoxModal>
 
   <CardBoxComponentEmpty v-if="!clients.length">
@@ -97,7 +93,7 @@
                 color="danger"
                 :icon="mdiTrashCan"
                 small
-                @click="isModalDangerActive = true"
+                @click="showDeleteModal(client.id)"
               />
             </BaseButtons>
           </td>
@@ -147,6 +143,8 @@ import { localizeClientType } from "@/js/helpers/localization";
 import { useUserStore } from "@/stores/user";
 import { useClientStore } from "@/stores/clients";
 import router from "@/router";
+import "element-plus/es/components/notification/style/css";
+import { ElNotification } from "element-plus";
 
 defineProps({
   checkable: Boolean,
@@ -182,6 +180,24 @@ const clients = computed(() => {
   return clientStore.clients;
 });
 
+const clientIdToDelete = ref(null);
+
+const showDeleteModal = (clientId) => {
+  clientIdToDelete.value = clientId;
+  isModalDangerActive.value = true;
+};
+
+const deleteClient = () => {
+  clientStore.deleteClient(clientIdToDelete.value).then(() => {
+    ElNotification({
+      message: "Клиент успешно удален",
+      duration: 3500,
+      type: "success",
+      showClose: true,
+    });
+  });
+};
+
 const findClientOwe = (clientId) => {
   const clientIndex = filteredClients.value.findIndex(
     (client) => client.id === clientId
@@ -202,12 +218,6 @@ const findClientOwe = (clientId) => {
 onMounted(async () => {
   await clientStore.getClientsByInspectionId(user.value.inspectionId);
 });
-
-const mainStore = useMainStore();
-
-const items = computed(() => mainStore.clients);
-
-const isModalActive = ref(false);
 
 const viewClientDetails = (clientId) => {
   router.push(`/clientDetails/${clientId}`);

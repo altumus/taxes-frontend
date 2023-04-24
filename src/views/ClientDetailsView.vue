@@ -4,7 +4,7 @@
       <SectionTitleLineWithButton title="Информация о клиенте">
         <span />
       </SectionTitleLineWithButton>
-      <CardBox>
+      <CardBox v-if="client">
         <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 mb-6">
           <CardBox>
             <div class="flex flex-col">
@@ -53,7 +53,10 @@
       <SectionTitleLineWithButton title="Информация об организациях">
         <span />
       </SectionTitleLineWithButton>
-      <CardBox v-for="organization in client?.organizations">
+      <CardBox
+        v-if="client?.organizations"
+        v-for="(organization, organizationIndex) in client?.organizations"
+      >
         <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 mb-6">
           <CardBox>
             <div class="flex flex-col">
@@ -118,6 +121,52 @@
             </div>
           </CardBox>
         </div>
+        <div
+          v-if="organization?.TaxesPayment"
+          v-for="(tax, index) in organization.TaxesPayment"
+          class="grid grid-cols-5 gap-6 mb-6"
+        >
+          <CardBox>
+            <div class="flex flex-col">
+              <span class="text-gray-500 text-[13px]">
+                Прибыль организации
+              </span>
+              <span class="text-lg"> {{ tax.income }} ₽ </span>
+            </div>
+          </CardBox>
+          <CardBox>
+            <div class="flex flex-col">
+              <span class="text-gray-500 text-[13px]"> Прибыль на момент </span>
+              <span class="text-lg">
+                {{ readableDate(tax.paymentDate) }}
+              </span>
+            </div>
+          </CardBox>
+          <CardBox>
+            <div class="flex flex-col">
+              <span class="text-gray-500 text-[13px]">
+                Заплатить налог до
+              </span>
+              <span class="text-lg">
+                {{ readableDate(tax.nextPaymentDate) }}
+              </span>
+            </div>
+          </CardBox>
+          <CardBox>
+            <div class="flex flex-col">
+              <span class="text-gray-500 text-[13px]"> Размер налога </span>
+              <span class="text-lg"> {{ tax.mustPay }} ₽ </span>
+            </div>
+          </CardBox>
+          <CardBox>
+            <div class="flex flex-col">
+              <span class="text-gray-500 text-[13px]"> Уплачено </span>
+              <span class="text-lg">
+                {{ isTaxPayed(tax.nextPaymentDate, organizationIndex) }}
+              </span>
+            </div>
+          </CardBox>
+        </div>
       </CardBox>
     </SectionMain>
   </LayoutAuthenticated>
@@ -128,8 +177,8 @@ import { computed } from "@vue/reactivity";
 import { useRouter } from "vue-router";
 import { useClientStore } from "@/stores/clients";
 import { useUserStore } from "@/stores/user";
-import { onMounted } from "vue";
-import { localizeClientType } from "@/js/helpers/localization";
+import { onMounted, ref } from "vue";
+import { localizeClientType, readableDate } from "@/js/helpers/localization";
 
 import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
 import SectionMain from "@/components/SectionMain.vue";
@@ -156,6 +205,41 @@ onMounted(async () => {
 const client = computed(() => {
   return clientsStore.clients[0];
 });
+
+const isTaxPayed = (nextPaymentDate, organizationIndex) => {
+  if (!nextPaymentDate || !!organizationIndex) return;
+  const payedTaxes =
+    clientsStore.clients[0].organizations[organizationIndex]
+      .TaxesSuccessPayment;
+
+  const nextPayment = new Date(nextPaymentDate);
+  for (let i = 0; i < payedTaxes.length; i++) {
+    if (
+      defineQuartal(payedTaxes[i].paymentDate) === defineQuartal(nextPayment)
+    ) {
+      return readableDate(payedTaxes[i].paymentDate);
+    }
+  }
+  return "Не уплачено";
+};
+
+const defineQuartal = (paymentDate) => {
+  const date = new Date(paymentDate);
+
+  const month = date.getMonth();
+  const year = date.getFullYear();
+
+  switch (true) {
+    case month <= 2:
+      return `Q1-${year}`;
+    case month <= 5:
+      return `Q2-${year}`;
+    case month <= 8:
+      return `Q3-${year}`;
+    default:
+      return `Q4-${year}`;
+  }
+};
 
 const isClientFound = computed(() => {
   if (!client.value) return false;

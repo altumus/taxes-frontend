@@ -27,6 +27,14 @@ const routes = [
   },
   {
     meta: {
+      title: 'Форма оплаты налога'
+    },
+    path: '/clientPayment',
+    name: 'clientPayment',
+    component: () => import('@/views/ClientPaymentView.vue')
+  },
+  {
+    meta: {
       title: 'Создать клиента'
     },
     path: '/createClient',

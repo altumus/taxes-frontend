@@ -36,6 +36,26 @@ export const useClientStore = defineStore("client", {
         });
       }
     },
+    async deleteClient(clientId: number) {
+      try {
+        await Api.deleteClient(clientId);
+        const clientIndex = this.clients.findIndex(
+          (client) => client.id === clientId
+        );
+        if (clientIndex === -1) return;
+        this.clients.splice(clientIndex, 1);
+      } catch (error) {
+        throw error;
+      }
+    },
+    async createSuccessPayment(organizationId: number, payment: string) {
+      try {
+        const result = await Api.createSuccessPayment(organizationId, payment);
+        return result;
+      } catch (error) {
+        throw error;
+      }
+    },
     async getClientInfo(inspectionId: number, clientId: number) {
       const client = await Api.getClientInfo(inspectionId, clientId);
       this.clients.push(client);

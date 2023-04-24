@@ -18,7 +18,7 @@ const props = defineProps({
   },
   buttonLabel: {
     type: String,
-    default: "Done",
+    default: "Подтвердить",
   },
   hasCancel: Boolean,
   modelValue: {
@@ -77,7 +77,7 @@ window.addEventListener("keydown", (e) => {
           <BaseButton :label="buttonLabel" :color="button" @click="confirm" />
           <BaseButton
             v-if="hasCancel"
-            label="Cancel"
+            label="Отмена"
             :color="button"
             outline
             @click="cancel"

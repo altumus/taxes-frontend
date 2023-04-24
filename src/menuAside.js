@@ -13,6 +13,11 @@ export default [
   },
   {
     to: '/clientForm',
+    label: 'Внести доход',
+    icon: mdiPlus
+  },
+  {
+    to: '/clientPayment',
     label: 'Внести платеж',
     icon: mdiPlus
   }

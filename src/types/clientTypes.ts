@@ -64,7 +64,6 @@ export type Client = {
   name: string;
   phone: string;
   organizations: Organization[];
-  TaxesPayment: Taxes[];
 };
 
 export type Taxes = {
@@ -72,6 +71,14 @@ export type Taxes = {
   paymentDate: string;
   nextPaymentDate: string;
   income: number;
+  mustPay: string;
+};
+
+export type SuccessTaxes = {
+  id: number;
+  organizationId: number;
+  paymentDate: string;
+  paymentSum: string;
 };
 
 export type Organization = {
@@ -86,6 +93,8 @@ export type Organization = {
   inspectionId: number;
   taxesTypeId: number;
   clientId: number;
+  TaxesPayment: Taxes[];
+  TaxesSuccessPayment: SuccessTaxes[];
 };
 
 export class CreatePaymentRequest {
