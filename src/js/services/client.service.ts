@@ -26,7 +26,7 @@ export async function createClient(body: CreateClientRequest) {
 export async function createOrganization(body: CreateOrganizationRequest) {
   try {
     const result = await axios.post(`/clients/add-organization`, body);
-    return result.data;
+    return result;
   } catch (error) {
     throw error;
   }

@@ -65,6 +65,7 @@ export type Client = {
   phone: string;
   organizations: Organization[];
   haveOwe: boolean;
+  isArchived: boolean;
 };
 
 export type Taxes = {
@@ -96,6 +97,8 @@ export type Organization = {
   clientId: number;
   TaxesPayment: Taxes[];
   TaxesSuccessPayment: SuccessTaxes[];
+  isArchived: string;
+  archiveDate: string;
 };
 
 export class CreatePaymentRequest {

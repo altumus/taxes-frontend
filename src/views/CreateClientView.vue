@@ -175,12 +175,20 @@ const submit = async () => {
     taxesTypeId: selectedTaxesOption.value.id,
     clientId: client.id,
   };
-  clientStore.createOrganization(organizationData).then(() => {
-    ElNotification({
-      message: "Клиент успешно создан",
-      duration: 4500,
-      type: "success",
-    });
+  clientStore.createOrganization(organizationData).then((resp) => {
+    if (resp.data.status === "created") {
+      ElNotification({
+        message: "Клиент успешно создан",
+        duration: 4500,
+        type: "success",
+      });
+    } else {
+      ElNotification({
+        message: "Клиент или организация уже закреплены за другой инспекцией",
+        duration: 4500,
+        type: "error",
+      });
+    }
   });
 };
 
