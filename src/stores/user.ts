@@ -17,5 +17,9 @@ export const useUserStore = defineStore("user", {
       this.user = user;
       return user;
     },
+    logout() {
+      localStorage.setItem("login", "");
+      localStorage.setItem("password", "");
+    },
   },
 });

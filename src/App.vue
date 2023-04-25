@@ -23,11 +23,5 @@ export default defineComponent({
   computed: {
     ...mapStores(useUserStore),
   },
-  methods: {
-    logout() {
-      localStorage.setItem("login", "");
-      localStorage.setItem("password", "");
-    },
-  },
 });
 </script>

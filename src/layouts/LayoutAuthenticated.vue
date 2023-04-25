@@ -10,6 +10,7 @@ import BaseIcon from "@/components/BaseIcon.vue";
 import NavBar from "@/components/NavBar.vue";
 import NavBarItemPlain from "@/components/NavBarItemPlain.vue";
 import AsideMenu from "@/components/AsideMenu.vue";
+import { useUserStore } from "@/stores/user";
 
 useMainStore().setUser({
   name: "John Doe",
@@ -32,13 +33,16 @@ router.beforeEach(() => {
   isAsideLgActive.value = false;
 });
 
+const userStore = useUserStore();
+
 const menuClick = (event, item) => {
   if (item.isToggleLightDark) {
     styleStore.setDarkMode();
   }
 
   if (item.isLogout) {
-    //
+    userStore.logout();
+    router.push("/login");
   }
 };
 </script>
