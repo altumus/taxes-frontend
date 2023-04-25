@@ -4,7 +4,7 @@
       <SectionTitleLineWithButton title="Информация о клиенте">
         <span />
       </SectionTitleLineWithButton>
-      <CardBox v-if="client">
+      <CardBox>
         <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 mb-6">
           <CardBox>
             <div class="flex flex-col">
@@ -54,7 +54,6 @@
         <span />
       </SectionTitleLineWithButton>
       <CardBox
-        v-if="client?.organizations"
         v-for="(organization, organizationIndex) in client?.organizations"
       >
         <div class="grid grid-cols-1 gap-6 mb-6">
@@ -144,10 +143,7 @@
         <SectionTitleLineWithButton title="Информация о налогах">
           <span />
         </SectionTitleLineWithButton>
-        <div
-          v-if="organization?.TaxesPayment"
-          v-for="(tax, index) in organization.TaxesPayment"
-        >
+        <div v-for="(tax, index) in organization.TaxesPayment">
           <div class="grid grid-cols-2 gap-6 mb-6">
             <CardBox>
               <div class="flex flex-col">
@@ -221,7 +217,6 @@
           <span />
         </SectionTitleLineWithButton>
         <div
-          v-if="organization?.TaxesSuccessPayment"
           v-for="(tax, index) in organization.TaxesSuccessPayment"
           class="grid grid-cols-2 gap-6 mb-6"
         >
@@ -280,7 +275,11 @@ onMounted(async () => {
     return Number(router.currentRoute.value.params.clientId);
   });
 
-  await clientsStore.getClientInfo(inspectionId.value, clientId.value);
+  clientsStore
+    .getClientInfo(inspectionId.value, clientId.value)
+    .then((resp) => {
+      console.log("resp", resp);
+    });
 });
 
 const client = computed(() => {

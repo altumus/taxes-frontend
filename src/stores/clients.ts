@@ -58,7 +58,7 @@ export const useClientStore = defineStore("client", {
     },
     async getClientInfo(inspectionId: number, clientId: number) {
       const client = await Api.getClientInfo(inspectionId, clientId);
-      this.clients.push(client);
+      this.clients.unshift(client);
       return client;
     },
     async createPayment(body: CreatePaymentRequest) {
