@@ -31,28 +31,28 @@ const submit = () => {
   <LayoutGuest>
     <SectionFullScreen v-slot="{ cardClass }" bg="purplePink">
       <CardBox :class="cardClass" is-form @submit.prevent="submit">
-        <FormField label="Login" help="Please enter your login">
+        <FormField label="Логин" help="Введите логин">
           <FormControl
             v-model="form.login"
             :icon="mdiAccount"
-            name="login"
+            name="Логин"
             autocomplete="username"
           />
         </FormField>
 
-        <FormField label="Password" help="Please enter your password">
+        <FormField label="Пароль" help="Введите пароль">
           <FormControl
             v-model="form.pass"
             :icon="mdiAsterisk"
             type="password"
-            name="password"
+            name="Пароль"
             autocomplete="current-password"
           />
         </FormField>
 
         <template #footer>
           <BaseButtons>
-            <BaseButton type="submit" color="info" label="Login" />
+            <BaseButton type="submit" color="info" label="Войти" />
             <BaseButton to="/dashboard" color="info" outline label="Back" />
           </BaseButtons>
         </template>
