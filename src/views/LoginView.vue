@@ -21,8 +21,8 @@ const router = useRouter();
 
 const userStore = useUserStore();
 
-const submit = () => {
-  userStore.login(form.login, form.pass, false);
+const submit = async () => {
+  await userStore.login(form.login, form.pass, false);
   router.push("/clients");
 };
 </script>

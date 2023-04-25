@@ -20,6 +20,7 @@ export const useUserStore = defineStore("user", {
     logout() {
       localStorage.setItem("login", "");
       localStorage.setItem("password", "");
+      this.user = {} as UserType;
     },
   },
 });
