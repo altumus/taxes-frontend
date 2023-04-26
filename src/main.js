@@ -5,12 +5,12 @@ import { darkModeKey, styleKey } from "@/config.js";
 import { useMainStore } from "@/stores/main.js";
 import { useStyleStore } from "@/stores/style.js";
 import ElementPlus from 'element-plus';
+import 'element-plus/dist/index.css';
 import elementPlusRuLocale from 'element-plus/dist/locale/ru';
 
 import App from "./App.vue";
-import router from "./router";
-
 import "./css/main.css";
+import router from "./router";
 
 window.addEventListener('unhandledrejection', (event) => {
   if(event.reason?.response?.data?.message === 'Unauthorized') {

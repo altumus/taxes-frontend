@@ -23,7 +23,7 @@
   <div v-if="clients">
     <div v-if="clients.length">
       <div
-        class="m-[10px] w-full cursor-pointer flex justify-between px-[15px] py-[6px] rounded-[6px]"
+        class="m-[10px] w-full cursor-pointer flex flex-col lg:flex-row lg:justify-between lg:px-[15px] py-[6px] rounded-[6px]"
       >
         <RouterLink to="/createClient">
           <BaseButton
@@ -32,13 +32,61 @@
             :label="'Добавить клиента'"
           />
         </RouterLink>
-        <div class="flex">
+        <div class="flex mt-[10px] lg:mt-0 lg:mr-[20px]">
           <input
-            class="mx-[10px] bg-transparent rounded-[6px]"
+            class="lg:mx-[10px] bg-transparent rounded-[6px]"
             v-model="filterRequest"
             type="text"
             placeholder="Введите данные"
           />
+          <el-dropdown class="flex items-center justify-center">
+            <span class="focus:outline-none mx-[10px]">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                version="1.1"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+              >
+                <g
+                  id="Free-Icons"
+                  stroke="none"
+                  stroke-width="1"
+                  fill="none"
+                  fill-rule="evenodd"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <g
+                    transform="translate(-155.000000, -381.000000)"
+                    id="Group"
+                    stroke="white"
+                    stroke-width="2"
+                  >
+                    <g transform="translate(153.000000, 376.000000)" id="Shape">
+                      <path d="M6,12 L18,12 M9,18 L15,18 M3,6 L21,6"></path>
+                    </g>
+                  </g>
+                </g>
+              </svg>
+            </span>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item
+                  :class="option.selected ? 'bg-gray-200' : ''"
+                  @click.prevent="selectOption(index)"
+                  :key="index"
+                  v-for="(option, index) in filterOptions"
+                >
+                  {{ option.label }}
+                </el-dropdown-item>
+                <el-dropdown-item @click="resetFilters" divided>
+                  Сбросить фильтры
+                </el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
         </div>
       </div>
       <table>
@@ -49,7 +97,8 @@
             <th>ИНН</th>
             <th>Тип</th>
             <th>Задолженности</th>
-            <th>Кол-во организаций</th>
+            <th>Организации</th>
+            <th>Активен</th>
             <th />
           </tr>
         </thead>
@@ -64,9 +113,9 @@
             <td data-label="ИНН" class="lg:w-1 whitespace-nowrap">
               <small
                 class="text-gray-500 dark:text-slate-400"
-                :title="client.clientType"
-                >{{ client.inn }}</small
-              >
+                :title="client.inn"
+                >{{ client.inn }}
+              </small>
             </td>
             <td data-label="Тип" class="lg:w-1 whitespace-nowrap">
               <small
@@ -88,6 +137,13 @@
                 class="text-gray-500 dark:text-slate-400"
                 :title="client.organizations.length"
                 >{{ client.organizations.length }}</small
+              >
+            </td>
+            <td data-label="Активен" class="lg:w-1 whitespace-nowrap">
+              <small
+                class="text-gray-500 dark:text-slate-400"
+                :title="client.isArchived"
+                >{{ client.isArchived ? "Нет" : "Да" }}</small
               >
             </td>
             <td class="before:hidden lg:w-1 whitespace-nowrap">
@@ -162,9 +218,85 @@ const userStore = useUserStore();
 
 const filterRequest = ref("");
 
+const filterOptions = ref([
+  {
+    label: "ИП",
+    value: "IP",
+    selected: false,
+    unique: true,
+    key: "clientType",
+  },
+  {
+    label: "Юр.Лицо",
+    value: "UL",
+    selected: false,
+    unique: true,
+    key: "clientType",
+  },
+  {
+    label: "Самозанятый",
+    value: "SE",
+    selected: false,
+    unique: true,
+    key: "clientType",
+  },
+  {
+    label: "Долги",
+    value: "OWE",
+    selected: false,
+    key: "haveOwe",
+  },
+  {
+    label: "Архив",
+    value: "ARCHIVE",
+    selected: false,
+    key: "isArchived",
+  },
+]);
+
+const selectOption = (optionIndex) => {
+  if (optionIndex < 3) {
+    for (let i = 0; i < 3; i++) {
+      if (optionIndex !== i) {
+        filterOptions.value[i].selected = false;
+      } else {
+        filterOptions.value[i].selected = true;
+      }
+    }
+  } else {
+    filterOptions.value[optionIndex].selected =
+      !filterOptions.value[optionIndex].selected;
+  }
+};
+
+const resetFilters = () => {
+  for (let i = 0; i < filterOptions.value.length; i++) {
+    filterOptions.value[i].selected = false;
+  }
+};
+
 const filteredClients = computed(() => {
   if (!clients.value) return [];
-  return clients.value.filter(
+  const selectedFilters = filterOptions.value.filter(
+    (option) => option.selected
+  );
+  let selectedClients = clients.value;
+  if (selectedFilters.length) {
+    for (let i = 0; i < selectedFilters.length; i++) {
+      if (selectedFilters[i].value === "ARCHIVE") {
+        selectedClients = selectedClients.filter(
+          (client) =>
+            client[selectedFilters[i].key] === selectedFilters[i].selected
+        );
+      } else {
+        selectedClients = selectedClients.filter(
+          (client) =>
+            client[selectedFilters[i].key] === selectedFilters[i].value
+        );
+      }
+    }
+  }
+  return selectedClients.filter(
     (client) =>
       client.clientType
         .toLowerCase()
