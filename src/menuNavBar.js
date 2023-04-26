@@ -3,18 +3,18 @@ import { mdiLogout, mdiThemeLightDark } from "@mdi/js";
 export default [
   {
     isCurrentUser: true,
-    label: "My Profile",
+    label: "Мой профиль",
     to: "/profile",
   },
   {
     icon: mdiThemeLightDark,
-    label: "Light/Dark",
+    label: "Оформление",
     isDesktopNoLabel: true,
     isToggleLightDark: true,
   },
   {
     icon: mdiLogout,
-    label: "Log out",
+    label: "Выход",
     isDesktopNoLabel: true,
     isLogout: true,
   },

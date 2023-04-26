@@ -1,13 +1,13 @@
 <template>
   <CardBoxModal
     v-model="isModalDangerActive"
-    title="Подтверждение удаления"
+    title="Подтверждение архивации"
     button="danger"
     button-label="Подтвердить"
     has-cancel
     @confirm="deleteClient"
   >
-    <p>Вы уверены, что хотите удалить клиента?</p>
+    <p>Вы уверены, что хотите отправить клиента в архив?</p>
   </CardBoxModal>
 
   <CardBoxComponentEmpty v-if="!clients.length">
@@ -23,9 +23,9 @@
   <div v-if="clients">
     <div v-if="clients.length">
       <div
-        class="m-[10px] w-full cursor-pointer flex flex-col lg:flex-row lg:justify-between lg:px-[15px] py-[6px] rounded-[6px]"
+        class="m-[10px] w-full flex flex-col lg:flex-row lg:justify-between lg:px-[15px] py-[6px] rounded-[6px]"
       >
-        <RouterLink to="/createClient">
+        <RouterLink class="cursor-pointer" to="/createClient">
           <BaseButton
             color="info"
             :icon="mdiPlus"
@@ -34,14 +34,17 @@
         </RouterLink>
         <div class="flex mt-[10px] lg:mt-0 lg:mr-[20px]">
           <input
-            class="lg:mx-[10px] bg-transparent rounded-[6px]"
+            class="lg:mx-[10px] cursor-text bg-transparent rounded-[6px]"
             v-model="filterRequest"
             type="text"
             placeholder="Введите данные"
           />
-          <el-dropdown class="flex items-center justify-center">
-            <span class="focus:outline-none mx-[10px]">
+          <el-dropdown class="flex items-center justify-center" trigger="click">
+            <span
+              class="focus:outline-none bg-blue-500 px-[13px] py-[10px] rounded-[6px] mx-[10px]"
+            >
               <svg
+                class="mt-[5px]"
                 width="20"
                 height="20"
                 viewBox="0 0 20 20"
@@ -160,6 +163,13 @@
                   small
                   @click="showDeleteModal(client.id)"
                 />
+                <BaseButton
+                  v-if="client.isArchived"
+                  color="success"
+                  :icon="mdiArrowLeft"
+                  small
+                  @click="returnClient(client.id)"
+                />
               </BaseButtons>
             </td>
           </tr>
@@ -197,7 +207,7 @@
 
 <script setup>
 import { computed, onMounted, ref } from "vue";
-import { mdiEye, mdiTrashCan, mdiPlus } from "@mdi/js";
+import { mdiEye, mdiTrashCan, mdiPlus, mdiArrowLeft } from "@mdi/js";
 import CardBoxModal from "@/components/CardBoxModal.vue";
 import CardBoxComponentEmpty from "@/components/CardBoxComponentEmpty.vue";
 import BaseLevel from "@/components/BaseLevel.vue";
@@ -260,7 +270,7 @@ const selectOption = (optionIndex) => {
       if (optionIndex !== i) {
         filterOptions.value[i].selected = false;
       } else {
-        filterOptions.value[i].selected = true;
+        filterOptions.value[i].selected = !filterOptions.value[i].selected;
       }
     }
   } else {
@@ -328,10 +338,20 @@ const showDeleteModal = (clientId) => {
   isModalDangerActive.value = true;
 };
 
+const returnClient = async (clientId) => {
+  await clientStore.returnClient(clientId);
+  ElNotification({
+    type: "success",
+    duration: 1500,
+    showClose: true,
+    message: "Клиент успешно возвращен из архива",
+  });
+};
+
 const deleteClient = () => {
   clientStore.deleteClient(clientIdToDelete.value).then(() => {
     ElNotification({
-      message: "Клиент успешно удален",
+      message: "Клиент отправлен в архив",
       duration: 3500,
       type: "success",
       showClose: true,

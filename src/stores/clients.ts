@@ -48,6 +48,14 @@ export const useClientStore = defineStore("client", {
         throw error;
       }
     },
+    async returnClient(clientId: number) {
+      await Api.returnClient(clientId);
+      const clientIndex = this.clients.findIndex(
+        (client) => client.id === clientId
+      );
+      if (clientIndex === -1) return;
+      this.clients[clientIndex].isArchived = false;
+    },
     async createSuccessPayment(organizationId: number, payment: string) {
       try {
         const result = await Api.createSuccessPayment(organizationId, payment);

@@ -32,6 +32,15 @@ export async function createOrganization(body: CreateOrganizationRequest) {
   }
 }
 
+export async function returnClient(clientId: number) {
+  try {
+    const result = await axios.patch(`/clients/return-client/${clientId}`);
+    return result.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
 export async function createPayment(body: CreatePaymentRequest) {
   try {
     const result = await axios.post(`/clients/add-payment`, body);
