@@ -242,12 +242,6 @@ const taxesOptions = [
     bid: 6,
   },
   {
-    id: 6,
-    label: "УСН ДОХОДЫ МИНУС РАСХОДЫ ИП",
-    value: "USN_INCOMING_MINUS_IP",
-    bid: 15,
-  },
-  {
     id: 7,
     label: "ОРН ИП",
     value: "ORN_IP",

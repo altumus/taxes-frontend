@@ -23,7 +23,7 @@
   <div v-if="clients">
     <div v-if="clients.length">
       <div
-        class="m-[10px] cursor-pointer flex w-[200px] px-[15px] py-[6px] rounded-[6px]"
+        class="m-[10px] w-full cursor-pointer flex justify-between px-[15px] py-[6px] rounded-[6px]"
       >
         <RouterLink to="/createClient">
           <BaseButton
@@ -32,12 +32,14 @@
             :label="'Добавить клиента'"
           />
         </RouterLink>
-        <input
-          class="mx-[10px] bg-transparent rounded-[6px]"
-          v-model="filterRequest"
-          type="text"
-          placeholder="Введите данные"
-        />
+        <div class="flex">
+          <input
+            class="mx-[10px] bg-transparent rounded-[6px]"
+            v-model="filterRequest"
+            type="text"
+            placeholder="Введите данные"
+          />
+        </div>
       </div>
       <table>
         <thead>
@@ -139,11 +141,9 @@
 
 <script setup>
 import { computed, onMounted, ref } from "vue";
-import { useMainStore } from "@/stores/main";
 import { mdiEye, mdiTrashCan, mdiPlus } from "@mdi/js";
 import CardBoxModal from "@/components/CardBoxModal.vue";
 import CardBoxComponentEmpty from "@/components/CardBoxComponentEmpty.vue";
-import TableCheckboxCell from "@/components/TableCheckboxCell.vue";
 import BaseLevel from "@/components/BaseLevel.vue";
 import BaseButtons from "@/components/BaseButtons.vue";
 import BaseButton from "@/components/BaseButton.vue";

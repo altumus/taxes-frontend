@@ -134,7 +134,7 @@ export const TaxesTypes = [
     bid: 6,
   },
   {
-    title: "УСН ДОХОДЫ МИНУС РАСХОДЫ",
+    title: "УСН ДОХОДЫ МИНУС РАСХОДЫ ЮЛ",
     bid: 15,
   },
   {
