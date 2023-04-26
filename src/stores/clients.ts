@@ -43,7 +43,7 @@ export const useClientStore = defineStore("client", {
           (client) => client.id === clientId
         );
         if (clientIndex === -1) return;
-        this.clients.splice(clientIndex, 1);
+        this.clients[clientIndex].isArchived = true;
       } catch (error) {
         throw error;
       }
