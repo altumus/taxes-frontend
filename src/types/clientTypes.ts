@@ -21,9 +21,6 @@ export class CreateClientRequest {
 }
 
 export class CreateOrganizationRequest {
-  @IsNumber()
-  id: number;
-
   @IsString()
   name: string;
 

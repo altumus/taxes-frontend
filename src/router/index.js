@@ -51,6 +51,14 @@ const routes = [
   },
   {
     meta: {
+      title: 'Создание организации'
+    },
+    path: '/createOrganization',
+    name: 'createOrganization',
+    component: () => import('@/views/CreateOrganization.vue')
+  },
+  {
+    meta: {
       title: 'Информация о клиенте'
     },
     path: '/clientDetails/:clientId',
