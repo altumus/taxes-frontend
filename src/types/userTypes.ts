@@ -9,6 +9,14 @@ export type UserType = {
   inspectionName: string;
 };
 
+export type CreateUserType = {
+  inspectionId: number;
+  login: string;
+  name: string;
+  password: string;
+  type: string;
+};
+
 enum UserTypes {
   ADMIN,
   VIEWER,

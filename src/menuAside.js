@@ -1,4 +1,4 @@
-import { mdiAccountCircle, mdiPlus, mdiTable } from "@mdi/js";
+import { mdiAccountCircle, mdiCrowd, mdiPlus, mdiTable } from "@mdi/js";
 
 export default [
   {
@@ -10,6 +10,11 @@ export default [
     to: "/profile",
     label: "Мой профиль",
     icon: mdiAccountCircle,
+  },
+  {
+    to: "/organization",
+    label: "Организация",
+    icon: mdiCrowd,
   },
   {
     to: '/clientForm',

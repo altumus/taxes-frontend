@@ -1,11 +1,12 @@
 import { defineStore } from "pinia";
 import md5 from "md5";
 import * as Api from "@/js/services/user.service";
-import { UserType } from "@/types/userTypes";
+import { CreateUserType, UserType } from "@/types/userTypes";
 
 export const useUserStore = defineStore("user", {
   state: () => ({
     user: {} as UserType,
+    allUsers: [] as UserType[],
   }),
   actions: {
     async login(login: string, password: string, encrypted: boolean) {
@@ -21,6 +22,13 @@ export const useUserStore = defineStore("user", {
       localStorage.setItem("login", "");
       localStorage.setItem("password", "");
       this.user = {} as UserType;
+    },
+    async addUser(dto: CreateUserType) {
+      const newUser = await Api.addUser(dto);
+      console.log("new user is", newUser);
+    },
+    checkUser(login: string) {
+      return Api.checkUser(login);
     },
   },
 });
