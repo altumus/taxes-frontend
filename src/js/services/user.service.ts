@@ -27,3 +27,21 @@ export async function checkUser(login: string) {
     throw error;
   }
 }
+
+export async function getAllUsers(inspectionId: number) {
+  try {
+    const result = await axios.get(`/users/all-users/${inspectionId}`);
+    return result.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function deleteUser(userId: number) {
+  try {
+    const result = await axios.delete(`/users/delete-user/${userId}`);
+    return result.data;
+  } catch (error) {
+    throw error;
+  }
+}

@@ -25,10 +25,21 @@ export const useUserStore = defineStore("user", {
     },
     async addUser(dto: CreateUserType) {
       const newUser = await Api.addUser(dto);
-      console.log("new user is", newUser);
+      this.allUsers.push(newUser);
     },
     checkUser(login: string) {
       return Api.checkUser(login);
+    },
+    async getAllUsers(inspectionId: number) {
+      const users = await Api.getAllUsers(inspectionId);
+      console.log("all users", users);
+      this.allUsers = users;
+    },
+    async deleteUser(userId: number) {
+      await Api.deleteUser(userId);
+      const userIndex = this.allUsers.findIndex((user) => user.id === userId);
+      if (userIndex === -1) return;
+      this.allUsers.splice(userIndex, 1);
     },
   },
 });

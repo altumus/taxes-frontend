@@ -5,7 +5,7 @@ export const localizePosition = (position) => {
     case 'ADMIN':
       return 'Администратор'
     case 'VIEWER':
-      return 'Бухгалтер'
+      return 'Сотрудник'
     default:
       break
   }
