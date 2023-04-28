@@ -40,7 +40,6 @@ import { localizeClientType } from "@/js/helpers/localization";
 
 import "element-plus/es/components/notification/style/css";
 import { ElNotification } from "element-plus";
-import FormsView from "./FormsView.vue";
 
 const userStore = useUserStore();
 const clientStore = useClientStore();

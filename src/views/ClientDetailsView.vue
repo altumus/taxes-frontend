@@ -196,15 +196,41 @@
           <div class="grid grid-cols-1 gap-6 mb-6">
             <CardBox>
               <div class="flex flex-col">
-                <span class="text-gray-500 text-[13px]"> Долг </span>
-                <span class="text-lg">
+                <span class="text-gray-500 text-[13px]">
                   {{
-                    formatNumber(
+                    Number(
                       oweSum(
                         organization.TaxesSuccessPayment,
                         defineQuartal(tax.nextPaymentDate),
                         tax.mustPay
                       )
+                    ) > 0
+                      ? "Долг"
+                      : "Оплачено авансом"
+                  }}
+                </span>
+                <span class="text-lg">
+                  {{
+                    formatNumber(
+                      Number(
+                        oweSum(
+                          organization.TaxesSuccessPayment,
+                          defineQuartal(tax.nextPaymentDate),
+                          tax.mustPay
+                        )
+                      ) > 0
+                        ? oweSum(
+                            organization.TaxesSuccessPayment,
+                            defineQuartal(tax.nextPaymentDate),
+                            tax.mustPay
+                          )
+                        : Number(
+                            oweSum(
+                              organization.TaxesSuccessPayment,
+                              defineQuartal(tax.nextPaymentDate),
+                              tax.mustPay
+                            )
+                          ) * -1
                     )
                   }}
                   ₽
