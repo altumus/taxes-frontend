@@ -53,7 +53,6 @@ const submit = async () => {
         <template #footer>
           <BaseButtons>
             <BaseButton type="submit" color="info" label="Войти" />
-            <BaseButton to="/dashboard" color="info" outline label="Back" />
           </BaseButtons>
         </template>
       </CardBox>
