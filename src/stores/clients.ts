@@ -30,7 +30,7 @@ export const useClientStore = defineStore("client", {
         return organization;
       } catch (error) {
         ElNotification({
-          message: "Клиент уже закреплен за другой инспекцией",
+          message: "Контрагент уже закреплен за другой инспекцией",
           duration: 1500,
           type: "error",
         });

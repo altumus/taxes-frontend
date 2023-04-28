@@ -6,10 +6,10 @@
           <span />
         </SectionTitleLineWithButton>
         <FormField>
-          <span>Выберите клиента</span>
+          <span>Выберите контрагента</span>
           <FormControl
             required
-            placeholder="Выберите клиента"
+            placeholder="Выберите контрагента"
             v-model="form.client"
             :options="clientsOptions"
           />

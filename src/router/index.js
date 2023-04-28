@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from "vue-router";
 const routes = [
   {
     meta: {
-      title: "Клиенты",
+      title: "Контрагент",
     },
     path: "/clients",
     name: "clients",
@@ -19,7 +19,7 @@ const routes = [
   },
   {
     meta: {
-      title: 'Форма клиента'
+      title: 'Форма контрагента'
     },
     path: '/clientForm',
     name: 'clientForm',
@@ -35,7 +35,7 @@ const routes = [
   },
   {
     meta: {
-      title: 'Создать клиента'
+      title: 'Создать контрагента'
     },
     path: '/createClient',
     name: 'createClient',
@@ -59,7 +59,7 @@ const routes = [
   },
   {
     meta: {
-      title: 'Информация о клиенте'
+      title: 'Информация о контрагенте'
     },
     path: '/clientDetails/:clientId',
     name: 'clientDetails',

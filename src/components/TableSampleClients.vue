@@ -7,16 +7,20 @@
     has-cancel
     @confirm="deleteClient"
   >
-    <p>Вы уверены, что хотите отправить клиента в архив?</p>
+    <p>Вы уверены, что хотите отправить контрагента в архив?</p>
   </CardBoxModal>
 
   <CardBoxComponentEmpty v-if="!clients.length">
     <div
       class="m-[10px] mx-auto items-center flex-col justify-center cursor-pointer flex w-[200px] px-[15px] py-[6px] rounded-[6px]"
     >
-      <span class="mb-[10px]">Клиентов нет</span>
+      <span class="mb-[10px]">Контрагентов нет</span>
       <RouterLink to="/createClient">
-        <BaseButton color="info" :icon="mdiPlus" :label="'Добавить клиента'" />
+        <BaseButton
+          color="info"
+          :icon="mdiPlus"
+          :label="'Добавить контрагента'"
+        />
       </RouterLink>
     </div>
   </CardBoxComponentEmpty>
@@ -25,16 +29,32 @@
       <div
         class="m-[10px] w-full flex flex-col lg:flex-row lg:justify-between lg:px-[15px] py-[6px] rounded-[6px]"
       >
-        <RouterLink class="cursor-pointer" to="/createClient">
-          <BaseButton
-            color="info"
-            :icon="mdiPlus"
-            :label="'Добавить клиента'"
-          />
-        </RouterLink>
+        <div class="flex flex-col lg:flex-row gap-[5px]">
+          <RouterLink class="cursor-pointer" to="/createClient">
+            <BaseButton
+              class="w-[97%]"
+              color="info"
+              :icon="mdiPlus"
+              :label="'Добавить контрагента'"
+            />
+          </RouterLink>
+          <RouterLink
+            v-if="clients.length"
+            class="cursor-pointer w-full"
+            to="/createOrganization"
+          >
+            <BaseButton
+              class="w-[97%]"
+              color="info"
+              :icon="mdiPlus"
+              :label="'Добавить организацию'"
+            />
+          </RouterLink>
+        </div>
+
         <div class="flex mt-[10px] lg:mt-0 lg:mr-[20px]">
           <input
-            class="lg:mx-[10px] cursor-text bg-transparent rounded-[6px]"
+            class="lg:mx-[10px] w-[90%] cursor-text bg-transparent rounded-[6px]"
             v-model="filterRequest"
             type="text"
             placeholder="Введите данные"
@@ -199,7 +219,7 @@
       <div
         class="m-[10px] mx-auto items-center flex-col justify-center cursor-pointer flex w-[200px] px-[15px] py-[6px] rounded-[6px]"
       >
-        <span class="mb-[10px]">Клиентов с такими данными нет</span>
+        <span class="mb-[10px]">Контрагентов с такими данными нет</span>
       </div>
     </CardBoxComponentEmpty>
   </div>
@@ -344,14 +364,14 @@ const returnClient = async (clientId) => {
     type: "success",
     duration: 1500,
     showClose: true,
-    message: "Клиент успешно возвращен из архива",
+    message: "Контрагент успешно возвращен из архива",
   });
 };
 
 const deleteClient = () => {
   clientStore.deleteClient(clientIdToDelete.value).then(() => {
     ElNotification({
-      message: "Клиент отправлен в архив",
+      message: "Контрагент отправлен в архив",
       duration: 3500,
       type: "success",
       showClose: true,

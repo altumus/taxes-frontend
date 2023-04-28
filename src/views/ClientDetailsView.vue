@@ -1,7 +1,7 @@
 <template>
   <LayoutAuthenticated>
     <SectionMain>
-      <SectionTitleLineWithButton title="Информация о клиенте">
+      <SectionTitleLineWithButton title="Информация о контрагенте">
         <span />
       </SectionTitleLineWithButton>
       <CardBox>
@@ -24,7 +24,7 @@
           </CardBox>
           <CardBox>
             <div class="flex flex-col">
-              <span class="text-gray-500 text-[13px]"> Тип клиента </span>
+              <span class="text-gray-500 text-[13px]"> Тип контрагента </span>
               <span class="text-lg">
                 {{ localizeClientType(client?.clientType) }}
               </span>

@@ -2,7 +2,7 @@
   <LayoutGuest>
     <SectionFullScreen v-slot="{ cardClass }" bg="purplePink">
       <CardBox :class="cardClass" is-form @submit.prevent="submit">
-        <FormField label="Id клиента">
+        <FormField label="Id Контрагента">
           <FormControl v-model="form.clientId" required name="clientId" />
         </FormField>
         <FormField label="Id организации">
