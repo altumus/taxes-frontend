@@ -51,6 +51,14 @@ const routes = [
   },
   {
     meta: {
+      title: 'Изменить данные контрагента'
+    },
+    path: '/editClient/:clientId',
+    name: 'editClient',
+    component: () => import('@/views/ClientEditView.vue')
+  },
+  {
+    meta: {
       title: 'Организация'
     },
     path: '/organization',

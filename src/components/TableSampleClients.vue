@@ -175,7 +175,13 @@
                   color="info"
                   :icon="mdiEye"
                   small
-                  @click="viewClientDetails(client.id)"
+                  :href="`/clientDetails/${client.id}`"
+                />
+                <BaseButton
+                  color="warning"
+                  :icon="mdiPen"
+                  :href="`/editClient/${client.id}`"
+                  small
                 />
                 <BaseButton
                   color="danger"
@@ -227,7 +233,7 @@
 
 <script setup>
 import { computed, onMounted, ref } from "vue";
-import { mdiEye, mdiTrashCan, mdiPlus, mdiArrowLeft } from "@mdi/js";
+import { mdiEye, mdiTrashCan, mdiPlus, mdiArrowLeft, mdiPen } from "@mdi/js";
 import CardBoxModal from "@/components/CardBoxModal.vue";
 import CardBoxComponentEmpty from "@/components/CardBoxComponentEmpty.vue";
 import BaseLevel from "@/components/BaseLevel.vue";
@@ -382,10 +388,6 @@ const deleteClient = () => {
 onMounted(async () => {
   await clientStore.getClientsByInspectionId(user.value.inspectionId);
 });
-
-const viewClientDetails = (clientId) => {
-  router.push(`/clientDetails/${clientId}`);
-};
 
 const isModalDangerActive = ref(false);
 
