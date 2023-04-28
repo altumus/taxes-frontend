@@ -133,6 +133,7 @@ import { ref, computed, reactive, onMounted } from "vue";
 import BaseButtons from "@/components/BaseButtons.vue";
 import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
 import SectionMain from "@/components/SectionMain.vue";
+import BaseLevel from "@/components/BaseLevel.vue";
 import FormField from "@/components/FormField.vue";
 import FormControl from "@/components/FormControl.vue";
 import SectionTitleLineWithButton from "@/components/SectionTitleLineWithButton.vue";

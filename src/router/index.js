@@ -1,5 +1,13 @@
 import { createRouter, createWebHistory } from "vue-router";
 
+const redirect = (to, from, next) => {
+  if (localStorage.getItem('login') && localStorage.getItem('password')) {
+    router.push('/clients')
+    return
+  }
+  router.push('/login')
+}
+
 const routes = [
   {
     meta: {
@@ -80,6 +88,7 @@ const routes = [
     path: "/:catchAll(.*)",
     name: "error",
     component: () => import("@/views/ErrorView.vue"),
+    beforeEnter: redirect
   },
 ];
 
