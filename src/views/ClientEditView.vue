@@ -9,7 +9,9 @@
           <span />
         </SectionTitleLineWithButton>
         <FormField>
-          <span>ФИО {{ checkChange("name", false) }}</span>
+          <span class="text-[13px] font-bold">
+            ФИО {{ checkChange("name", false) }}
+          </span>
           <FormControl
             v-model="form.name"
             placeholder="ФИО"
@@ -17,7 +19,9 @@
             name="fio"
             type="text"
           />
-          <span>ИНН {{ checkChange("inn", false) }}</span>
+          <span class="text-[13px] font-bold">
+            ИНН {{ checkChange("inn", false) }}
+          </span>
           <FormControl
             v-model="form.inn"
             placeholder="ИНН"
@@ -25,14 +29,22 @@
             name="inn"
             type="text"
           />
-          <span>Тип {{ checkChange("clientType", true) }}</span>
+          <span class="text-[13px] font-bold">
+            Тип {{ checkChange("clientType", true) }}
+          </span>
           <FormControl
+            v-if="client?.organizations.length"
             v-model="form.clientType"
             :options="clientOptions"
             name="clientOptions"
             type="text"
           />
-          <span>Телефон {{ checkChange("phone", false) }}</span>
+          <span class="text-[13px] font-bold italic">
+            Невозможно изменить тип, т.к у пользователя уже есть организации
+          </span>
+          <span class="text-[13px] font-bold">
+            Телефон {{ checkChange("phone", false) }}
+          </span>
           <FormControl
             v-model="form.phone"
             placeholder="Номер телефона"
@@ -40,7 +52,9 @@
             name="phone"
             type="text"
           />
-          <span>Email {{ checkChange("email", false) }}</span>
+          <span class="text-[13px] font-bold">
+            Email {{ checkChange("email", false) }}
+          </span>
           <FormControl
             v-model="form.email"
             placeholder="Email"
