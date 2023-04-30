@@ -59,6 +59,14 @@ const routes = [
   },
   {
     meta: {
+      title: 'Изменить данные организации',
+    },
+    path: '/editOrganization/:clientId/:organizationId',
+    name: 'editOrganization',
+    component: () => import('@/views/OrganizationEditView.vue')
+  },
+  {
+    meta: {
       title: 'Организация'
     },
     path: '/organization',

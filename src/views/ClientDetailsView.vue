@@ -56,6 +56,13 @@
       <CardBox
         v-for="(organization, organizationIndex) in client?.organizations"
       >
+        <BaseButton
+          class="w-full mb-[10px]"
+          color="success"
+          label="Изменить данные организации"
+          :href="`/editOrganization/${client.id}/${organization.id}`"
+          :icon="mdiPen"
+        />
         <div class="grid grid-cols-1 gap-6 mb-6">
           <CardBox>
             <div class="flex flex-col">
@@ -285,7 +292,9 @@ import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
 import SectionMain from "@/components/SectionMain.vue";
 import SectionTitleLineWithButton from "@/components/SectionTitleLineWithButton.vue";
 import CardBox from "@/components/CardBox.vue";
+import BaseButton from "@/components/BaseButton.vue";
 import { SuccessTaxes } from "@/types/clientTypes";
+import { mdiPen } from "@mdi/js";
 
 const clientsStore = useClientStore();
 const userStore = useUserStore();
