@@ -33,13 +33,13 @@
             Тип {{ checkChange("clientType", true) }}
           </span>
           <FormControl
-            v-if="client?.organizations.length"
+            v-if="!client?.organizations.length"
             v-model="form.clientType"
             :options="clientOptions"
             name="clientOptions"
             type="text"
           />
-          <span class="text-[13px] font-bold italic">
+          <span v-else class="text-[13px] font-bold italic">
             Невозможно изменить тип, т.к у пользователя уже есть организации
           </span>
           <span class="text-[13px] font-bold">
