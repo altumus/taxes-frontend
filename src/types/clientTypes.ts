@@ -1,4 +1,4 @@
-import { IsString, IsNumber } from "class-validator";
+import { IsString, IsNumber, IsBoolean } from "class-validator";
 
 export class CreateClientRequest {
   @IsNumber()
@@ -50,6 +50,29 @@ export class CreateOrganizationRequest {
 
   @IsNumber()
   clientId: number;
+}
+
+export class EditClientRequest {
+  @IsNumber()
+  id: number;
+
+  @IsString()
+  name: string;
+
+  @IsString()
+  inn: string;
+
+  @IsString()
+  phone: string;
+
+  @IsString()
+  email: string;
+
+  @IsString()
+  clientType: string;
+
+  @IsBoolean()
+  isArchived: boolean;
 }
 
 export type Client = {

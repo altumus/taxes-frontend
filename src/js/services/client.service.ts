@@ -3,6 +3,7 @@ import {
   CreateClientRequest,
   CreateOrganizationRequest,
   CreatePaymentRequest,
+  EditClientRequest,
 } from "@/types/clientTypes";
 
 export async function getClientsByInspectionId(inspectionId: number) {
@@ -80,6 +81,16 @@ export async function getClientInfo(inspectionId: number, clientId: number) {
       `/clients/client-info/${inspectionId}/${clientId}`
     );
     console.log("result", result.data);
+    return result.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function editClient(body: EditClientRequest) {
+  try {
+    const result = await axios.patch(`/clients/edit-client`, body);
+    console.log("edit client", result.data);
     return result.data;
   } catch (error) {
     throw error;

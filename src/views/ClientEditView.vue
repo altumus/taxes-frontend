@@ -1,7 +1,7 @@
 <template>
   <LayoutAuthenticated>
     <SectionMain>
-      <CardBox is-form @submit.prevent>
+      <CardBox is-form @submit.prevent="submit">
         <SectionTitleLineWithButton
           title="Изменение контрагента"
           :icon="mdiPen"
@@ -61,6 +61,16 @@
             name="email"
             type="text"
           />
+          <span class="text-[13px] font-bold">
+            В архиве {{ checkChange("isArchived", false) }}
+          </span>
+          <FormCheckRadio
+            class="w-min"
+            v-model="form.isArchived"
+            name="isArchivedSwitch"
+            type="switch"
+            input-value
+          />
         </FormField>
         <BaseButton
           type="submit"
@@ -85,8 +95,12 @@ import CardBox from "@/components/CardBox.vue";
 import SectionTitleLineWithButton from "@/components/SectionTitleLineWithButton.vue";
 import FormField from "@/components/FormField.vue";
 import FormControl from "@/components/FormControl.vue";
+import FormCheckRadio from "@/components/FormCheckRadio.vue";
 
 import BaseButton from "@/components/BaseButton.vue";
+
+import "element-plus/es/components/notification/style/css";
+import { ElNotification } from "element-plus";
 
 const clientStore = useClientStore();
 const userStore = useUserStore();
@@ -138,17 +152,49 @@ const clientOptions = [
 ];
 
 const checkChange = (field: string, isOptions: boolean) => {
-  if (!client.value) return;
+  if (!client.value) return "";
 
   if (isOptions) {
     if (form.value[field].value !== client.value.clientType) {
       return "(изменено)";
     }
-    return;
+    return "";
   }
 
   if (form.value[field] !== client.value[field]) {
     return "(изменено)";
   }
+};
+
+const submit = () => {
+  const editData = {
+    id: client.value.id,
+    name: form.value.name,
+    inn: form.value.inn,
+    phone: form.value.phone,
+    email: form.value.email,
+    clientType: form.value.clientType.value,
+    isArchived: form.value.isArchived,
+  };
+
+  clientStore
+    .editClient(editData)
+    .then(() => {
+      ElNotification({
+        type: "success",
+        duration: 1500,
+        showClose: true,
+        message: "Контрагент успешно изменен",
+      });
+    })
+    .catch((error) => {
+      ElNotification({
+        type: "error",
+        duration: 1500,
+        showClose: true,
+        message: "Произошла ошибка при изменении контрагента",
+      });
+      console.log("error while update", error);
+    });
 };
 </script>
