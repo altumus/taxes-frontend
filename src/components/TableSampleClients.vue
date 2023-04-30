@@ -277,7 +277,7 @@ const filterOptions = ref([
     key: "clientType",
   },
   {
-    label: "Долги",
+    label: "Задолженности",
     value: "OWE",
     selected: false,
     key: "haveOwe",
