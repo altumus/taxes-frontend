@@ -54,3 +54,12 @@ export async function editUser(body: EditUserDto) {
     throw error;
   }
 }
+
+export async function getUserById(userId: number) {
+  try {
+    const result = await axios.get(`/users/get-user-by-id/${userId}`);
+    return result.data;
+  } catch (error) {
+    throw error;
+  }
+}

@@ -85,13 +85,29 @@
                 <td class="before:hidden lg:w-1 whitespace-nowrap">
                   <BaseButtons type="justify-start lg:justify-end" no-wrap>
                     <BaseButton
-                      v-if="user.id !== currentUser.id"
+                      v-if="
+                        user.id !== currentUser.id &&
+                        currentUser.type !== 'VIEWER'
+                      "
                       color="danger"
                       :icon="mdiTrashCan"
                       small
                       @click="showDeleteModal(user.id)"
                     />
-                    <span class="justify-start lg:justify-end" v-else>
+                    <BaseButton
+                      v-if="
+                        user.id !== currentUser.id &&
+                        currentUser.type !== 'VIEWER'
+                      "
+                      color="warning"
+                      :icon="mdiPen"
+                      :href="`/editMember/${user.id}`"
+                      small
+                    />
+                    <span
+                      class="justify-start lg:justify-end"
+                      v-if="user.id === currentUser.id"
+                    >
                       (Вы)
                     </span>
                   </BaseButtons>
@@ -127,7 +143,7 @@
 import md5 from "md5";
 import BaseButton from "@/components/BaseButton.vue";
 import CardBoxModal from "@/components/CardBoxModal.vue";
-import { mdiPlus, mdiClose, mdiTrashCan } from "@mdi/js";
+import { mdiPlus, mdiClose, mdiTrashCan, mdiPen } from "@mdi/js";
 import { localizePosition } from "@/js/helpers/localization.js";
 import { ref, computed, reactive, onMounted } from "vue";
 import BaseButtons from "@/components/BaseButtons.vue";

@@ -44,11 +44,24 @@ export const useUserStore = defineStore("user", {
     async editUser(body: EditUserDto) {
       const updatedUser = await Api.editUser(body);
       console.log("update", updatedUser);
-      this.user.login = updatedUser.login;
-      this.user.password = updatedUser.password;
-      this.user.name = updatedUser.name;
-      localStorage.setItem("login", updatedUser.login);
-      localStorage.setItem("password", updatedUser.password);
+      if (!body.type) {
+        this.user.login = updatedUser.login;
+        this.user.password = updatedUser.password;
+        this.user.name = updatedUser.name;
+        localStorage.setItem("login", updatedUser.login);
+        localStorage.setItem("password", updatedUser.password);
+        return;
+      } else {
+        this.allUsers[0].login = updatedUser.login;
+        this.allUsers[0].password = updatedUser.password;
+        this.allUsers[0].name = updatedUser.name;
+        this.allUsers[0].type = updatedUser.type;
+      }
+    },
+    async getUserById(userId: number) {
+      const user = await Api.getUserById(userId);
+      console.log("getted user", user);
+      this.allUsers.push(user);
     },
   },
 });

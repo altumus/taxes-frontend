@@ -31,6 +31,9 @@ export class EditUserDto {
 
   @IsString()
   password: string;
+
+  @IsString()
+  type?: string;
 }
 
 enum UserTypes {
