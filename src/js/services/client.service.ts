@@ -4,6 +4,7 @@ import {
   CreateOrganizationRequest,
   CreatePaymentRequest,
   EditClientRequest,
+  EditOrganizationDto,
 } from "@/types/clientTypes";
 
 export async function getClientsByInspectionId(inspectionId: number) {
@@ -91,6 +92,31 @@ export async function editClient(body: EditClientRequest) {
   try {
     const result = await axios.patch(`/clients/edit-client`, body);
     console.log("edit client", result.data);
+    return result.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function getClientWithOrganization(
+  inspectionId: number,
+  clientId: number,
+  organizationId: number
+) {
+  try {
+    const result = await axios.get(
+      `/clients/client-with-org/${inspectionId}/${clientId}/${organizationId}`
+    );
+    console.log("get client info", result.data);
+    return result.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function editOrganization(body: EditOrganizationDto) {
+  try {
+    const result = await axios.patch(`/clients/edit-organization`, body);
     return result.data;
   } catch (error) {
     throw error;

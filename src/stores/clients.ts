@@ -6,6 +6,7 @@ import {
   CreateOrganizationRequest,
   CreatePaymentRequest,
   EditClientRequest,
+  EditOrganizationDto,
 } from "@/types/clientTypes";
 
 import "element-plus/es/components/notification/style/css";
@@ -81,6 +82,22 @@ export const useClientStore = defineStore("client", {
       this.clients[0].phone = client.phone;
       this.clients[0].name = client.name;
       this.clients[0].isArchived = client.isArchived;
+    },
+    async getClientWithOrganization(
+      inspectionId: number,
+      clientId: number,
+      organizationId: number
+    ) {
+      const client = await Api.getClientWithOrganization(
+        inspectionId,
+        clientId,
+        organizationId
+      );
+      this.clients.push(client);
+    },
+    async editOrganization(body: EditOrganizationDto) {
+      const updatedOrganization = await Api.editOrganization(body);
+      this.clients[0].organizations[0] = updatedOrganization;
     },
   },
 });
