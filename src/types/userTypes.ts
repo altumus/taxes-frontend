@@ -1,3 +1,5 @@
+import { IsNumber, IsString } from "class-validator";
+
 export type UserType = {
   id: number;
   inspectionId: number;
@@ -16,6 +18,20 @@ export type CreateUserType = {
   password: string;
   type: string;
 };
+
+export class EditUserDto {
+  @IsNumber()
+  id: number;
+
+  @IsString()
+  login: string;
+
+  @IsString()
+  name: string;
+
+  @IsString()
+  password: string;
+}
 
 enum UserTypes {
   ADMIN,

@@ -1,5 +1,5 @@
 import axios from "@/js/plugins/axios";
-import { CreateUserType } from "@/types/userTypes";
+import { CreateUserType, EditUserDto } from "@/types/userTypes";
 
 export async function login(login: string, password: string) {
   try {
@@ -40,6 +40,15 @@ export async function getAllUsers(inspectionId: number) {
 export async function deleteUser(userId: number) {
   try {
     const result = await axios.delete(`/users/delete-user/${userId}`);
+    return result.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function editUser(body: EditUserDto) {
+  try {
+    const result = await axios.patch(`/users/edit-user`, body);
     return result.data;
   } catch (error) {
     throw error;

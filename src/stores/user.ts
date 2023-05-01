@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import md5 from "md5";
 import * as Api from "@/js/services/user.service";
-import { CreateUserType, UserType } from "@/types/userTypes";
+import { CreateUserType, EditUserDto, UserType } from "@/types/userTypes";
 
 export const useUserStore = defineStore("user", {
   state: () => ({
@@ -40,6 +40,15 @@ export const useUserStore = defineStore("user", {
       const userIndex = this.allUsers.findIndex((user) => user.id === userId);
       if (userIndex === -1) return;
       this.allUsers.splice(userIndex, 1);
+    },
+    async editUser(body: EditUserDto) {
+      const updatedUser = await Api.editUser(body);
+      console.log("update", updatedUser);
+      this.user.login = updatedUser.login;
+      this.user.password = updatedUser.password;
+      this.user.name = updatedUser.name;
+      localStorage.setItem("login", updatedUser.login);
+      localStorage.setItem("password", updatedUser.password);
     },
   },
 });
