@@ -42,6 +42,7 @@
             required
             name="inn"
             type="text"
+            maxlength="10"
           />
           <span class="text-[13px] font-bold mb-[6px]">
             КПП {{ checkChange("organizationKpp", false) }}
@@ -50,6 +51,7 @@
             v-model="form.organizationKpp"
             placeholder="КПП"
             required
+            maxlength="9"
             name="kpp"
             type="text"
           />
@@ -60,6 +62,7 @@
             v-model="form.organizationOgrn"
             placeholder="ОГРН"
             required
+            maxlength="13"
             name="ogrn"
             type="text"
           />

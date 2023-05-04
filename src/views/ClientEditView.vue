@@ -27,6 +27,7 @@
             placeholder="ИНН"
             required
             name="inn"
+            maxlength="10"
             type="text"
           />
           <span class="text-[13px] font-bold">

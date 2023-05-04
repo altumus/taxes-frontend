@@ -26,6 +26,7 @@
             required
             name="orgInn"
             type="text"
+            maxlength="10"
           />
           <FormControl
             v-model="form.kpp"
@@ -33,11 +34,13 @@
             required
             name="kpp"
             type="text"
+            maxlength="9"
           />
           <FormControl
             v-model="form.ogrn"
             placeholder="ОГРН"
             required
+            maxlength="13"
             name="ogrn"
             type="text"
           />

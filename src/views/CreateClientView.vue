@@ -19,6 +19,7 @@
             required
             name="inn"
             type="text"
+            maxlength="10"
           />
           <FormControl
             v-model="selectedClientOption"
